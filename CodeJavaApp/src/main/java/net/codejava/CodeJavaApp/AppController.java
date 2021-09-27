@@ -4,12 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+// import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
-@Controller
+@RestController
 public class AppController {
 
     @Autowired
@@ -45,4 +49,12 @@ public class AppController {
 
         return "users";
     }
+
+    //   @GetMapping("/news")
+    //   public String news() {
+    //       String url = "https://newsapi.org/v2/top-headlines?q=covid&country=sg&apiKey=b9cde93901804d46b86a6ca9e443b0eb";
+    //       String news = restTemplate.getForObject(url, String.class);
+    //       return news;
+    //   }
+
 }
