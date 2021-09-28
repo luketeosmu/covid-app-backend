@@ -19,4 +19,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new CustomUserDetails(user);
     }
 
+//    public void createNewCustomerAfterOAuthLoginSuccess(String email, String name, AuthenticationProvider provider) {
+//        User user = new User();
+//        user.setEmail(email);
+//        user.setFirstName(name);
+//        user.setAuthProvider(provider);
+//
+//        userRepo.save(user);
+//    }
 }
