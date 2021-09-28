@@ -22,6 +22,10 @@ public class User {
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "auth_provider")
+    private AuthenticationProvider authProvider;
+
     public Long getId() {
         return id;
     }
@@ -60,5 +64,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public AuthenticationProvider getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(AuthenticationProvider authProvider) {
+        this.authProvider = authProvider;
     }
 }
