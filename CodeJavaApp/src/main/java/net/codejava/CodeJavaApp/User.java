@@ -22,7 +22,7 @@ public class User {
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)   
     @Column(name = "auth_provider")
     private AuthenticationProvider authProvider;
 
