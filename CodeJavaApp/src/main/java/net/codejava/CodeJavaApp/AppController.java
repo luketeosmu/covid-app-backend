@@ -19,6 +19,9 @@ public class AppController {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @GetMapping("")
     public String viewHomePage() {
         return "index";
@@ -50,11 +53,11 @@ public class AppController {
         return "users";
     }
 
-    //   @GetMapping("/news")
-    //   public String news() {
-    //       String url = "https://newsapi.org/v2/top-headlines?q=covid&country=sg&apiKey=b9cde93901804d46b86a6ca9e443b0eb";
-    //       String news = restTemplate.getForObject(url, String.class);
-    //       return news;
-    //   }
+       @GetMapping("/news")
+       public String news() {
+           String url = "https://newsapi.org/v2/top-headlines?q=covid&country=sg&apiKey=b9cde93901804d46b86a6ca9e443b0eb";
+           String news = restTemplate.getForObject(url, String.class);
+           return news;
+       }
 
 }
