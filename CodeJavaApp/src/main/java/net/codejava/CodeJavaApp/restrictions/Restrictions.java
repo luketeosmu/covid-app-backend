@@ -28,10 +28,11 @@ public class Restrictions {
     public Restrictions() {
     }
 
-    public Restrictions(Long id, String locationSetting, String category) {
+    public Restrictions(Long id, String locationSetting, String category,String description) {
         this.id = id;
         this.locationSetting = locationSetting;
         this.category = category;
+        this.description = description;
     }
 
     public Long getId() {
