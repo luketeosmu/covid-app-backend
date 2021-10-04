@@ -15,16 +15,7 @@ public class Restrictions {
     private String category;
     @NotNull
     private String description;
-    
-    @ManyToMany
-    // the column "book_id" will be in the auto-generated table "review"
-    // nullable = false: add not-null constraint to the database column "book_id"
-    @JoinTable(name = "business_restrictions", 
-        joinColumns = @JoinColumn(name= "business_id"),
-        inverseJoinColumns = 
-        @JoinColumn(name = "restriction_id"))
-    private Set<Business> business = new HashSet<>();
-    
+
     public Restrictions() {
     }
 
