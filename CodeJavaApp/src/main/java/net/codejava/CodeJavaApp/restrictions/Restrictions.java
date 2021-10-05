@@ -2,6 +2,16 @@ package net.codejava.CodeJavaApp.restrictions;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 @Entity
 public class Restrictions {
@@ -16,15 +26,21 @@ public class Restrictions {
     @NotNull
     private String description;
 
-    public Restrictions() {
+    public Restrictions(String locationSetting, String category,String description) {
+        this.locationSetting = locationSetting;
+        this.category = category;
+        this.description = description;
     }
-
-    public Restrictions(Long id, String locationSetting, String category,String description) {
+    public Restrictions(Long id ,String locationSetting, String category,String description) {
         this.id = id;
         this.locationSetting = locationSetting;
         this.category = category;
         this.description = description;
     }
+
+    public Restrictions() {
+    }
+
 
     public Long getId() {
         return id;

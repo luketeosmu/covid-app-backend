@@ -1,4 +1,4 @@
-package net.codejava.CodeJavaApp;
+package net.codejava.CodeJavaApp.user;
 
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class AppController {
         return "signup_form";
     }
 
-    @PostMapping("/process_register")
+    @PostMapping("/users")
     public String processRegister(User user) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(user.getPassword());

@@ -2,6 +2,8 @@ package net.codejava.CodeJavaApp.restrictions;
 import java.util.List;
 
 import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,20 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RestrictionsController {
-    private RestrictionsRepository restrictions; 
+    @Autowired 
+    private RestrictionsService restrictionSvc;
 
     @GetMapping("/restrictions")
     public List<Restrictions> getAllRestrictions() {
-        return restrictions.findAll();
+        return restrictionSvc.getAllRestrictions();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/restrictions")
     public Restrictions addRestrictions(@Valid @RequestBody Restrictions restriction) {
-            if(restrictions.findById(restriction.getId()).isPresent())
-                return restrictions.save(restriction);
-            else
-                return null;
+        return restrictionSvc.addRestrictions(restriction);
     }
 
 
@@ -37,17 +37,11 @@ public class RestrictionsController {
                                  @PathVariable (value = "restrictionId") Long restrictionId,
                                  @Valid @RequestBody Restrictions newRestriction) {
 
-        return restrictions.findById(restrictionId).map(restriction -> {restriction.setDescription(newRestriction.getDescription());
-            return restrictions.save(restriction);
-        }).orElse(null);
+        return restrictionSvc.updateRestrictions(restrictionId,newRestriction);
     }
 
     @DeleteMapping("/restrictions/{id}")
     public void deleteRestriction(@PathVariable Long id){
-        try{
-            restrictions.deleteById(id);
-         }catch(EmptyResultDataAccessException e) {
-            throw new RestrictionNotFoundException(id);
-         }
+        restrictionSvc.deleteRestrictions(id);
     }
 }

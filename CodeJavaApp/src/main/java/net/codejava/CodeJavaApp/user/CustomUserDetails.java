@@ -1,4 +1,4 @@
-package net.codejava.CodeJavaApp;
+package net.codejava.CodeJavaApp.user;
 
 import java.util.Collection;
 
