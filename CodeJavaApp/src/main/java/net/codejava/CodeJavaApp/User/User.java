@@ -1,4 +1,6 @@
-package net.codejava.CodeJavaApp;
+package net.codejava.CodeJavaApp.User;
+
+import net.codejava.CodeJavaApp.Security.AuthenticationProvider;
 
 import javax.persistence.*;
 

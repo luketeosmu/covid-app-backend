@@ -1,6 +1,7 @@
 package net.codejava.CodeJavaApp;
 
-import com.nimbusds.jose.proc.SecurityContext;
+import net.codejava.CodeJavaApp.User.User;
+import net.codejava.CodeJavaApp.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
