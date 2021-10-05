@@ -3,7 +3,6 @@ package net.codejava.CodeJavaApp.user;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,103 +10,56 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.CollectionId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import javax.persistence.*;
-import net.codejava.CodeJavaApp.security.AuthenticationProvider;
+
+import lombok.*;
 
 @Entity
-@Table(name = "users")
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+
+/* Implementations of UserDetails to provide user information to Spring Security, 
+e.g., what authorities (roles) are granted to the user and whether the account is enabled or not
+*/
 public class User implements UserDetails{
+    private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;   
-
-    @Column(nullable = false, unique = true, length = 45)
-    private String email;
-
-    @Column(nullable = false, length = 64)
+    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+    
+    @NotNull(message = "Username should not be null")
+    @Size(min = 5, max = 20, message = "Username should be between 5 and 20 characters")
+    private String username;
+    
+    @NotNull(message = "Password should not be null")
+    @Size(min = 8, message = "Password should be at least 8 characters")
     private String password;
 
-    @Column(name = "first_name", nullable = false, length = 20)
+    @NotNull(message = "first name shouldnt be null")
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 20)
+    @NotNull(message = "last name shouldnt be null")
     private String lastName;
-
-    // @Enumerated(EnumType.STRING)
-    // @Column(name = "auth_provider")
-    // private AuthenticationProvider authProvider;
 
     @NotNull(message = "Authorities should not be null")
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
     private String authorities;
 
-    
-
-    public User() {
-    }
-
-    public User(Long id, String email, String password, String firstName, String lastName,String authorities) {
-        this.id = id;
-        this.email = email;
+    public User(String username,String password,String firstName,String lastName,String authorities) {
+        this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.authorities = authorities;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    // public AuthenticationProvider getAuthProvider() {
-    //     return authProvider;
-    // }
-
-    // public void setAuthProvider(AuthenticationProvider authProvider) {
-    //     this.authProvider = authProvider;
-    // }
-
+    /* Return a collection of authorities granted to the user.
+    */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority(authorities));
@@ -132,10 +84,5 @@ public class User implements UserDetails{
     @Override
     public boolean isEnabled() {
         return true;
-    }
-    
-    @Override
-    public String getUsername(){
-        return email;
     }
 }

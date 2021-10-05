@@ -13,16 +13,24 @@ POST http://localhost:8080/restrictions
 Content-Type: application/json
 
 { 
+    "id":"1",
     "category": "managing arrival",
     "description":"testing 12345",
     "locationSetting": "outdoor"
 }
 ###
-POST http://localhost:8080/books
+POST http://localhost:8080/businesses
 Content-Type: application/json
 
 {
-    "name": "I, Robot"
+    "business_id":"1",
+    "business_name":"tea party",
+    "description":"better than pasta express",
+    "location":"SMU SOE",
+    "email":"teaparty@gmail.com",
+    "mobile_num":"96969696",
+    "outdoor_indoor":"i",
+    "capacity":"1000"
 }
 ###
 PUT http://localhost:8080/books/1
@@ -72,11 +80,10 @@ Content-Type: application/json
 ###
 POST http://localhost:8080/users
 Content-Type: application/json
-Authorization: Basic hihi@gmail.com Tester123
 
 {
-        "id" :"2",
-        "email": "tester@gmail.com",
+
+        "username":"testing@gmail.com",
         "password": "Tester123",
         "firstName":"firstName",
         "lastName": "lastName",

@@ -5,9 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-// import net.codejava.CodeJavaApp.client.RestTemplateClient;
+import net.codejava.CodeJavaApp.restrictions.RestrictionsRepository;
 import net.codejava.CodeJavaApp.user.User;
 import net.codejava.CodeJavaApp.user.UserRepository;
+import net.codejava.CodeJavaApp.restrictions.*;
 @SpringBootApplication
 public class CodeJavaAppApplication {
 
@@ -22,14 +23,13 @@ public class CodeJavaAppApplication {
 		BCryptPasswordEncoder encoder = ctx.getBean(BCryptPasswordEncoder.class);
         // JPA user repository init
         UserRepository users = ctx.getBean(UserRepository.class);
+		RestrictionsRepository restrictions = ctx.getBean(RestrictionsRepository.class);
         System.out.println("[Add user]: " + users.save(
-            new User(1L,"hihi@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
-        
+            new User("hihi@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
+        System.out.println("[Add user]: " + users.save(
+            new User("hihi2@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
+        System.out.println("[Add user]: " + users.save(
+            new User("hihi3@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
+        System.out.println("[Add RESTRICTIONS]: " + restrictions.save(new Restrictions("ind", "nim","woi")));
     }
 }
-//this.id = id;
-// this.email = email;
-// this.password = password;
-// this.firstName = firstName;
-// this.lastName = lastName;
-// this.authorities = authorities;

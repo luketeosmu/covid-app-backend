@@ -21,7 +21,7 @@ public class BusinessService {
     }
 
     public Business addBusiness(@RequestBody Business business){
-        if(businessRepository.findById(business.getBusiness_id()).isPresent()){
+        if(!businessRepository.findById(business.getBusiness_id()).isPresent()){
             return businessRepository.save(business);
         }
         else{

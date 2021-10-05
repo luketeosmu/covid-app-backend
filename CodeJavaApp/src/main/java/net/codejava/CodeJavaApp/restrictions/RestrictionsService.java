@@ -20,10 +20,7 @@ public class RestrictionsService {
     }
 
     public Restrictions addRestrictions(Restrictions restrictions){
-        if(!restrictionsRepository.findById(restrictions.getId()).isPresent())
-                return restrictionsRepository.save(restrictions);
-            else
-                return null;
+        return restrictionsRepository.save(restrictions);
     }
 
     public Restrictions updateRestrictions(Long RestrictionsId, Restrictions newRestrictions){

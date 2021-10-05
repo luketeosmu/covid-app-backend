@@ -1,6 +1,5 @@
 package net.codejava.CodeJavaApp.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,25 +7,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
-    @Autowired
-    private UserRepository userRepo;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return new CustomUserDetails(user);
+    private UserRepository users;
+    
+    public CustomUserDetailsService(UserRepository users) {
+        this.users = users;
     }
-
-//    public void createNewCustomerAfterOAuthLoginSuccess(String email, String name, AuthenticationProvider provider) {
-//        User user = new User();
-//        user.setEmail(email);
-//        user.setFirstName(name);
-//        user.setAuthProvider(provider);
-//
-//        userRepo.save(user);
-//    }
+    @Override
+    /** To return a UserDetails for Spring Security 
+     *  Note that the method takes only a username.
+        The UserDetails interface has methods to get the password.
+    */
+    public UserDetails loadUserByUsername(String username)  throws UsernameNotFoundException {
+        return users.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("User '" + username + "' not found"));
+    }
+    
 }
