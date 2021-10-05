@@ -1,4 +1,4 @@
-package net.codejava.CodeJavaApp.Security;
+package net.codejava.CodeJavaApp;
 
 public enum AuthenticationProvider {
     LOCAL, GOOGLE

@@ -1,8 +1,8 @@
-package net.codejava.CodeJavaApp.User;
+package net.codejava.CodeJavaApp;
 
-import net.codejava.CodeJavaApp.User.CustomUserDetails;
-import net.codejava.CodeJavaApp.User.User;
-import net.codejava.CodeJavaApp.User.UserRepository;
+import net.codejava.CodeJavaApp.CustomUserDetails;
+import net.codejava.CodeJavaApp.User;
+import net.codejava.CodeJavaApp.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

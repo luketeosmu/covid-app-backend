@@ -1,4 +1,4 @@
-package net.codejava.CodeJavaApp.Security;
+package net.codejava.CodeJavaApp;
 
 import java.util.Collection;
 import java.util.Map;

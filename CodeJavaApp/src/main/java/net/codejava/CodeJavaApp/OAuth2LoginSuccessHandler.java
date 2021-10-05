@@ -1,4 +1,4 @@
-package net.codejava.CodeJavaApp.Security;
+package net.codejava.CodeJavaApp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

@@ -1,6 +1,6 @@
-package net.codejava.CodeJavaApp.User;
+package net.codejava.CodeJavaApp;
 
-import net.codejava.CodeJavaApp.User.UserRepository;
+import net.codejava.CodeJavaApp.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,8 @@
-package net.codejava.CodeJavaApp.Security;
+package net.codejava.CodeJavaApp;
 
 import javax.sql.DataSource;
 
-import net.codejava.CodeJavaApp.User.CustomUserDetailsService;
+import net.codejava.CodeJavaApp.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
