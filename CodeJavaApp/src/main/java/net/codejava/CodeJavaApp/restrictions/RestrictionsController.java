@@ -18,7 +18,7 @@ public class RestrictionsController {
     private RestrictionsRepository restrictions; 
 
     @GetMapping("/restrictions")
-    public List<Restrictions> getAllRestrictionsByBusinessId() {
+    public List<Restrictions> getAllRestrictions() {
         return restrictions.findAll();
     }
 
