@@ -29,13 +29,13 @@ public class BusinessService {
         }
     }
 
-    public Business updateBusiness(@PathVariable(value = "businessId") Long businessId, @RequestBody Business newBusiness){
+    public Business updateBusiness(Long businessId, Business newBusiness){
         return businessRepository.findById(businessId).map(restriction -> {restriction.setDescription(newBusiness.getDescription());
             return businessRepository.save(restriction);
         }).orElse(null);
     }
 
-    public void deleteBusiness(@PathVariable Long businessId){
+    public void deleteBusiness(Long businessId){
         try{
             businessRepository.deleteById(businessId);
         }catch(EmptyResultDataAccessException e) {
