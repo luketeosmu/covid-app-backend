@@ -5,12 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import net.codejava.CodeJavaApp.restrictions.RestrictionsRepository;
+import net.codejava.CodeJavaApp.Restrictions.RestrictionsRepository;
 import net.codejava.CodeJavaApp.user.User;
 import net.codejava.CodeJavaApp.user.UserRepository;
 import net.codejava.CodeJavaApp.Business.Business;
 import net.codejava.CodeJavaApp.Business.BusinessRepository;
 import net.codejava.CodeJavaApp.restrictions.*;
+
 @SpringBootApplication
 public class CodeJavaAppApplication {
 

@@ -1,6 +1,7 @@
 package net.codejava.CodeJavaApp.Business;
 
 import javax.persistence.*;
+import net.codejava.CodeJavaApp.user.*;
 
 @Entity
 public class Business {
@@ -30,7 +31,9 @@ public class Business {
     // @Column(nullable = false)
     private Long capacity;
 
-
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 
     
@@ -46,7 +49,7 @@ public class Business {
     }
 
     public Business(Long businessId, String businessName, String description, String location, String email,
-            Long mobileNum, Character outdoorIndoor, Long capacity) {
+            Long mobileNum, Character outdoorIndoor, Long capacity, User user) {
         this.businessId = businessId;
         this.businessName = businessName;
         this.description = description;
@@ -55,6 +58,7 @@ public class Business {
         this.mobileNum = mobileNum;
         this.outdoorIndoor = outdoorIndoor;
         this.capacity = capacity;
+        this.user = user;
     }
 
     public Business() {
@@ -108,27 +112,29 @@ public class Business {
         this.mobileNum = mobileNum;
     }
 
+    public Character getOutdoorIndoor() {
+        return outdoorIndoor;
+    }
+
     public void setOutdoorIndoor(Character outdoorIndoor) {
         this.outdoorIndoor = outdoorIndoor;
+    }
+
+    public Long getCapacity() {
+        return capacity;
     }
 
     public void setCapacity(Long capacity) {
         this.capacity = capacity;
     }
 
-    public char getOutdoorIndoor() {
-        return outdoorIndoor;
+    public User getUser() {
+        return user;
     }
 
-    public void setOutdoorIndoor(char outdoorIndoor) {
-        this.outdoorIndoor = outdoorIndoor;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public long getCapacity() {
-        return capacity;
-    }
 
-    public void setCapacity(long capacity) {
-        this.capacity = capacity;
-    }
 }
