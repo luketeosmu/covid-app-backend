@@ -1,4 +1,4 @@
-package net.codejava.CodeJavaApp.Restrictions;
+package net.codejava.CodeJavaApp.restrictions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -12,5 +12,5 @@ public class RestrictionNotFoundException extends RuntimeException{
     public RestrictionNotFoundException(Long id) {
         super("Could not find restriction " + id);
     }
-
+    
 }

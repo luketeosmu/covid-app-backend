@@ -2,7 +2,7 @@ GET http://localhost:8080
 
 
 ###
-GET http://localhost:8080/books/1
+GET http://localhost:8080/users/1/businesses
 
 ###
 DELETE http://localhost:8080/books/1
@@ -13,11 +13,21 @@ POST http://localhost:8080/restrictions
 Content-Type: application/json
 
 { 
-    "id":"1",
     "category": "managing arrival",
     "description":"testing 345345",
     "locationSetting": "outdoor"
 }
+###
+
+###
+PUT http://localhost:8080/restrictions/2
+Content-Type: application/json
+Authorization: Basic hihi@gmail.com Tester123
+
+{
+    "description": "The Return of the King"
+}
+
 ###
 POST http://localhost:8080/users/1/businesses
 Content-Type: application/json
@@ -32,14 +42,22 @@ Content-Type: application/json
     "capacity":"1000"
 }
 ###
-PUT http://localhost:8080/books/1
+PUT http://localhost:8080/users/1/businesses/2
 Content-Type: application/json
-Authorization: Basic dt goodpassword
+Authorization: Basic hihi@gmail.com Tester123
 
 {
-    "title": "The Return of the King"
+    "description":"best kebab",
+    "location":"peace centre",
+    "email":"turkskebab@gmail.com",
+    "mobileNum":"91234567",
+    "outdoorIndoor":"O"
 }
 
+###
+###
+
+DELETE http://localhost:8080/users/1/businesses/1
 ###
 GET http://localhost:8080/books/1/reviews
 
@@ -61,10 +79,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8080/books/1/reviews/5
+DELETE http://localhost:8080/restrictions/2
 
 ###
-GET http://localhost:8080/users
+GET http://localhost:8080/restrictions
 
 ###
 POST http://localhost:8080/restrictions
@@ -86,5 +104,5 @@ Content-Type: application/json
         "password": "Tester123",
         "firstName":"firstName",
         "lastName": "lastName",
-        "authorities": "ROLE_ADMIN"
+        "authorities": "ROLE_USER"
 }

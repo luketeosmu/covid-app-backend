@@ -61,7 +61,7 @@ public class BusinessController {
     }
 
     @DeleteMapping("/users/{userid}/businesses/{businessId}")
-    public ResponseEntity<?> deleteBusiness(@PathVariable Long userId ,@PathVariable Long businessId){
-        return businessService.deleteBusiness(userId ,businessId);
+    public ResponseEntity<?> deleteBusiness(@PathVariable Long userid ,@PathVariable Long businessId){
+        return businessService.deleteBusiness(userid ,businessId);
     }
 }

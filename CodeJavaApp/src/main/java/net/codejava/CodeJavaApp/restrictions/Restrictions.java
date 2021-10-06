@@ -1,52 +1,53 @@
-package net.codejava.CodeJavaApp.Restrictions;
+package net.codejava.CodeJavaApp.restrictions;
 
-// import net.codejava.CodeJavaApp.Business.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.HashSet;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 @Entity
-@Table(name = "restrictions")
 public class Restrictions {
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long restriction_id;
-
-    //applies to indoor/outdoor/all
-    @NotNull(message = "Attraction setting should not be empty")
-    @Size(max = 7, message = "Attraction setting should be Indoor/Outdoor/Both only")
+    private  @Id @GeneratedValue (strategy = GenerationType.IDENTITY) Long id;
+    
+    //applies to indoor/outdoor/all 
+    // @NotNull(message = "Attraction setting should not be empty")
+    @Size(max = 7, message = "Attraction setting should be Indoor/Outdoor/All only")
     private String locationSetting;
-    @NotNull(message = "Category should not be empty")
+    // @NotNull(message = "Category should not be empty")
     private String category;
-    @NotNull
+    // @NotNull
     private String description;
 
-    // @ManyToMany
-    // // the column "book_id" will be in the auto-generated table "review"
-    // // nullable = false: add not-null constraint to the database column "book_id"
-    // @JoinTable(name = "business_restrictions",
-    //         joinColumns = @JoinColumn(name= "business_id"),
-    //         inverseJoinColumns =
-    //         @JoinColumn(name = "restriction_id"))
-    // private Set<Business> business = new HashSet<Business>();
-
-    public Restrictions() {
+    public Restrictions(String locationSetting, String category,String description) {
+        this.locationSetting = locationSetting;
+        this.category = category;
+        this.description = description;
     }
-
-    public Restrictions(String locationSetting, String category, String description) {
-//        this.restriction_id = restriction_id;
+    public Restrictions(Long id ,String locationSetting, String category,String description) {
+        this.id = id;
         this.locationSetting = locationSetting;
         this.category = category;
         this.description = description;
     }
 
-    public Long getId() {
-        return restriction_id;
+    public Restrictions() {
     }
 
-    public void setId(Long restriction_id) {
-        this.restriction_id = restriction_id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLocationSetting() {
@@ -81,7 +82,5 @@ public class Restrictions {
     
     // 
 
-    //
-
-
+    
 }

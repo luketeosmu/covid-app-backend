@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import net.codejava.CodeJavaApp.Restrictions.RestrictionsRepository;
+import net.codejava.CodeJavaApp.restrictions.RestrictionsRepository;
 import net.codejava.CodeJavaApp.user.User;
 import net.codejava.CodeJavaApp.user.UserRepository;
 import net.codejava.CodeJavaApp.Business.Business;
@@ -29,11 +29,7 @@ public class CodeJavaAppApplication {
 		RestrictionsRepository restrictions = ctx.getBean(RestrictionsRepository.class);
 		BusinessRepository businesses = ctx.getBean(BusinessRepository.class);
         System.out.println("[Add user]: " + users.save(
-            new User("hihi@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
-        System.out.println("[Add user]: " + users.save(
-            new User("hihi2@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
-        System.out.println("[Add user]: " + users.save(
-            new User("hihi3@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
+            new User("hihi@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_USER")).getUsername());
         System.out.println("[Add RESTRICTIONS]: " + restrictions.save(new Restrictions("ind", "nim","woi")));
 
     }

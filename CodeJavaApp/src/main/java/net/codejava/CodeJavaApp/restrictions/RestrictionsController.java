@@ -1,9 +1,9 @@
-package net.codejava.CodeJavaApp.Restrictions;
+package net.codejava.CodeJavaApp.restrictions;
 import java.util.List;
 
 import javax.validation.Valid;
 
-import net.codejava.CodeJavaApp.Restrictions.RestrictionNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,48 +17,53 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RestrictionsController {
-    private RestrictionsServiceImpl restrictionsService;
-
-    public RestrictionsController(RestrictionsServiceImpl restrictionsService) {
-        this.restrictionsService = restrictionsService;
-    }
+    @Autowired 
+    private RestrictionsServiceImpl restrictionSvc;
 
     @GetMapping("/restrictions")
-    public List<Restrictions> getRestrictions() {
-        return restrictionsService.listRestrictions();
+    public List<Restrictions> getAllRestrictions() {
+        return restrictionSvc.getAllRestrictions();
     }
 
-    @GetMapping("/restrictions/{id}")
-    public Restrictions getRestriction(Long restrictionId) {
-        Restrictions restriction = restrictionsService.getRestriction(restrictionId);
-        if(restriction == null) throw new RestrictionNotFoundException(restrictionId);
-        return restriction;
+    @GetMapping("/restrictions/{restrictionId}")
+    public Restrictions getRestriction(@PathVariable(value = "restrictionId") Long restrictionId) {
+        return restrictionSvc.getRestriction(restrictionId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/restrictions")
     public Restrictions addRestrictions(@Valid @RequestBody Restrictions restriction) {
-        Restrictions savedRestriction = restrictionsService.addRestriction(restriction);
-        return savedRestriction;
+        return restrictionSvc.addRestrictions(restriction);
     }
 
 
     @PutMapping("/restrictions/{restrictionId}")
     public Restrictions updateRestrictions(
-            @PathVariable (value = "restrictionId") Long restrictionId,
-            @Valid @RequestBody Restrictions newRestriction) {
-            Restrictions updatedRestriction = restrictionsService.updateRestriction(restrictionId, newRestriction);
-            if(updatedRestriction == null) throw new RestrictionNotFoundException(restrictionId);
-            return updatedRestriction;
+                                 @PathVariable (value = "restrictionId") Long restrictionId,
+                                 @Valid @RequestBody Restrictions newRestriction) {
+        Restrictions restriction = restrictionSvc.updateRestrictions(restrictionId, newRestriction);
+        if(restriction == null){
+            throw new RestrictionNotFoundException(restrictionId);
+        }
+        return restriction;
     }
+
+    /*
+    @PutMapping("/books/{id}")
+    public Book updateBook(@PathVariable Long id, @Valid @RequestBody Book newBookInfo){
+        Book book = bookService.updateBook(id, newBookInfo);
+        if(book == null) throw new BookNotFoundException(id);
+        
+        return book;
+    }
+    */
 
     @DeleteMapping("/restrictions/{id}")
     public void deleteRestriction(@PathVariable Long id){
         try{
-            restrictionsService.deleteRestriction(id);
-        }catch(EmptyResultDataAccessException e) {
+            restrictionSvc.deleteRestrictions(id);
+         }catch(EmptyResultDataAccessException e) {
             throw new RestrictionNotFoundException(id);
-        }
+         }
     }
 }
-

@@ -1,4 +1,5 @@
 package net.codejava.CodeJavaApp.security;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -48,20 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.PUT, "/businesses/*").permitAll()
             .antMatchers(HttpMethod.DELETE, "/businesses/*").permitAll()
             // your code here
-            .antMatchers(HttpMethod.POST, "/restrictions").permitAll()
+            .antMatchers(HttpMethod.POST, "/restrictions").authenticated()
             .antMatchers(HttpMethod.PUT, "/restrictions/*").permitAll()
             .antMatchers(HttpMethod.DELETE, "/restrictions/*").permitAll()
             .antMatchers(HttpMethod.GET, "/users").permitAll()
             .antMatchers(HttpMethod.POST, "/users").permitAll()
-            // .antMatchers(HttpMethod.POST, "/businesses").hasRole("ADMIN")
-            // .antMatchers(HttpMethod.PUT, "/businesses/*").hasRole("ADMIN")
-            // .antMatchers(HttpMethod.DELETE, "/businesses/*").hasRole("ADMIN")
-            // // your code here
-            // .antMatchers(HttpMethod.POST, "/restrictions").hasAnyRole("ADMIN", "USER")
-            // .antMatchers(HttpMethod.PUT, "/restrictions/*").hasRole("ADMIN")
-            // .antMatchers(HttpMethod.DELETE, "/restrictions/*").hasRole("ADMIN")
-            // .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-            // .antMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
             .and()
         .csrf().disable() // CSRF protection is needed only for browser based attacks
         .formLogin().disable()
