@@ -73,6 +73,12 @@ public class Restrictions {
     public void setDescription(String description) {
         this.description = description;
     }
+    @Override
+    public String toString() {
+        return "Restrictions [category=" + category + ", description=" + description + ", id=" + id
+                + ", locationSetting=" + locationSetting + "]";
+    }
+    
     
     // 
 

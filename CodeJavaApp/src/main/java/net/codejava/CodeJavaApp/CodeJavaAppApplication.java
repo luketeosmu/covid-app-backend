@@ -11,6 +11,7 @@ import net.codejava.CodeJavaApp.user.UserRepository;
 import net.codejava.CodeJavaApp.Business.Business;
 import net.codejava.CodeJavaApp.Business.BusinessRepository;
 import net.codejava.CodeJavaApp.restrictions.*;
+
 @SpringBootApplication
 public class CodeJavaAppApplication {
 

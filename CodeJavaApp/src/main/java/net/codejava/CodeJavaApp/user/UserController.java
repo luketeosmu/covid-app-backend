@@ -1,6 +1,6 @@
 package net.codejava.CodeJavaApp.user;
 
-import java.util.List;
+import java.util.*;
 
 import javax.validation.Valid;
 
@@ -40,5 +40,19 @@ public class UserController {
             return users.save(user);
         }
     }
+
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable Long id){
+        // User user = users.findbyId(id);
+
+        // // Need to handle "User not found" error using proper HTTP status code
+        // // In this case it should be HTTP 404
+        // if(user == null) throw new UserNotFoundException(id);
+        // return user;
+
+        return users.findById(id).orElse(null);
+
+    }
+
    
 }
