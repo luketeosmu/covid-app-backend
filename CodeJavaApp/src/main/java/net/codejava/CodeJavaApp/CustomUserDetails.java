@@ -2,7 +2,7 @@ package net.codejava.CodeJavaApp;
 
 import java.util.Collection;
 
-import net.codejava.CodeJavaApp.User;
+import net.codejava.CodeJavaApp.Users.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

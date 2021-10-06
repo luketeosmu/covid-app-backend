@@ -1,4 +1,4 @@
-package net.codejava.CodeJavaApp;
+package net.codejava.CodeJavaApp.Users;
 
 import net.codejava.CodeJavaApp.AuthenticationProvider;
 

@@ -1,7 +1,7 @@
-package net.codejava.CodeJavaApp;
+package net.codejava.CodeJavaApp.Users;
 
-import net.codejava.CodeJavaApp.User;
-import net.codejava.CodeJavaApp.UserRepository;
+import net.codejava.CodeJavaApp.Users.User;
+import net.codejava.CodeJavaApp.Users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -56,10 +56,9 @@ public class AppController {
         //should check if the user has logged in or not
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken){
+            //redirect to login page if user has not logged in
             return "login";
         }
-
-        //redirect to login page if user has not logged in
         return "redirect:/";
     }
 }

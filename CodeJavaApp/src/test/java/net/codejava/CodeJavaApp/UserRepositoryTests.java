@@ -2,8 +2,8 @@ package net.codejava.CodeJavaApp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import net.codejava.CodeJavaApp.User;
-import net.codejava.CodeJavaApp.UserRepository;
+import net.codejava.CodeJavaApp.Users.User;
+import net.codejava.CodeJavaApp.Users.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
