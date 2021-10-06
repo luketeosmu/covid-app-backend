@@ -3,48 +3,77 @@ package net.codejava.CodeJavaApp.Business;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "business")
 public class Business {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long business_id;
+    private Long businessId;
 
-    @Column(nullable = false, unique = true, length = 200)
-    private String business_name;
+    // @Column(nullable = false, unique = true, length = 200)
+    private String businessName;
 
-    @Column(nullable = false, length = 200)
+    // @Column(nullable = false, length = 200)
     private String description;
 
-    @Column(length = 200)
+    // @Column(length = 200)
     private String location;
 
-    @Column(unique = true, length = 45)
+    // @Column(unique = true, length = 45)
     private String email;
 
-    @Column(unique = true)
-    private Long mobile_num;
+    // @Column(unique = true)
+    private Long mobileNum;
 
-    @Column(nullable = false)
-    private Character outdoor_indoor;
+    // @Column(nullable = false)
+    private Character outdoorIndoor;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private Long capacity;
 
-    public Long getBusiness_id() {
-        return business_id;
+
+
+
+    
+    public Business(String businessName, String description, String location, String email, Long mobileNum,
+            Character outdoorIndoor, Long capacity) {
+        this.businessName = businessName;
+        this.description = description;
+        this.location = location;
+        this.email = email;
+        this.mobileNum = mobileNum;
+        this.outdoorIndoor = outdoorIndoor;
+        this.capacity = capacity;
     }
 
-    public void setBusiness_id(Long business_id) {
-        this.business_id = business_id;
+    public Business(Long businessId, String businessName, String description, String location, String email,
+            Long mobileNum, Character outdoorIndoor, Long capacity) {
+        this.businessId = businessId;
+        this.businessName = businessName;
+        this.description = description;
+        this.location = location;
+        this.email = email;
+        this.mobileNum = mobileNum;
+        this.outdoorIndoor = outdoorIndoor;
+        this.capacity = capacity;
     }
 
-    public String getBusiness_name() {
-        return business_name;
+    public Business() {
     }
 
-    public void setBusiness_name(String business_name) {
-        this.business_name = business_name;
+    public Long getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(Long businessId) {
+        this.businessId = businessId;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
     }
 
     public String getDescription() {
@@ -71,28 +100,28 @@ public class Business {
         this.email = email;
     }
 
-    public Long getMobile_num() {
-        return mobile_num;
+    public Long getMobileNum() {
+        return mobileNum;
     }
 
-    public void setMobile_num(Long mobile_num) {
-        this.mobile_num = mobile_num;
+    public void setMobileNum(Long mobileNum) {
+        this.mobileNum = mobileNum;
     }
 
-    public void setOutdoor_indoor(Character outdoor_indoor) {
-        this.outdoor_indoor = outdoor_indoor;
+    public void setOutdoorIndoor(Character outdoorIndoor) {
+        this.outdoorIndoor = outdoorIndoor;
     }
 
     public void setCapacity(Long capacity) {
         this.capacity = capacity;
     }
 
-    public char getOutdoor_indoor() {
-        return outdoor_indoor;
+    public char getOutdoorIndoor() {
+        return outdoorIndoor;
     }
 
-    public void setOutdoor_indoor(char outdoor_indoor) {
-        this.outdoor_indoor = outdoor_indoor;
+    public void setOutdoorIndoor(char outdoorIndoor) {
+        this.outdoorIndoor = outdoorIndoor;
     }
 
     public long getCapacity() {

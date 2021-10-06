@@ -1,0 +1,103 @@
+GET http://localhost:8080
+
+#For businesses
+###
+GET http://localhost:8080/businesses/
+Content-Type: application/json
+
+
+###
+POST http://localhost:8080/businesses
+Content-Type: application/json
+Authorization: Basic hihihi@gmail.com Tester123
+
+{
+    "businessName":"unautho",
+    "description":"better than pasta express",
+    "location":"SMU SOE",
+    "email":"unauthenti@gmail.com",
+    "mobileNum":"11111116",
+    "outdoorIndoor":"i",
+    "capacity":"100"
+}
+
+###
+POST http://localhost:8080/businesses
+Content-Type: application/json
+Authorization: Basic hihi@gmail.com Tester123
+
+{
+  "businessName":"unauth",
+  "description":"better than pasta express",
+  "location":"SMU SOE",
+  "email":"unauthent@gmail.com",
+  "mobileNum":"11111119",
+  "outdoorIndoor":"i",
+  "capacity":"100"
+}
+
+###
+PUT http://localhost:8080/businesses/1
+Content-Type: application/json
+
+{
+  "businessName":"user",
+  "description":"better than pasta express",
+  "location":"SMU SOE",
+  "email":"unauthe@gmail.com",
+  "mobileNum":"11111120",
+  "outdoorIndoor":"i",
+  "capacity":"100"
+}
+
+###
+DELETE http://localhost:8080/businesses/1
+Content-Type: application/json
+
+
+#For restrictions
+###
+GET http://localhost:8080/restrictions/
+Content-Type: application/json
+
+###
+POST http://localhost:8080/restrictions
+Content-Type: application/json
+Authorization: Basic hihihi@gmail.com Tester123
+
+{ 
+    "id":"1",
+    "category": "managing arrival",
+    "description":"testing 12345",
+    "locationSetting": "outdoor"
+}
+
+
+###
+POST http://localhost:8080/restrictions
+Content-Type: application/json
+
+{
+        "locationSetting":"Indoors",
+        "category" : "Managing Arrivals",
+        "description" : "nimama"
+}
+
+
+
+###
+GET http://localhost:8080/users
+Content-Type: application/json
+
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+
+        "username":"hihi4@gmail.com",
+        "password": "Tester123",
+        "firstName":"firstName",
+        "lastName": "lastName",
+        "authorities": "ROLE_ADMIN"
+}
