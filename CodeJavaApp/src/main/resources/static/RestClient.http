@@ -23,13 +23,12 @@ POST http://localhost:8080/businesses
 Content-Type: application/json
 
 {
-    "business_id":"1",
-    "business_name":"tea party",
+    "businessName":"tea party",
     "description":"better than pasta express",
     "location":"SMU SOE",
     "email":"teaparty@gmail.com",
-    "mobile_num":"96969696",
-    "outdoor_indoor":"i",
+    "mobileNum":"96969696",
+    "outdoorIndoor":"o",
     "capacity":"1000"
 }
 ###
@@ -83,7 +82,7 @@ Content-Type: application/json
 
 {
 
-        "username":"testing@gmail.com",
+        "username":"hihi4@gmail.com",
         "password": "Tester123",
         "firstName":"firstName",
         "lastName": "lastName",

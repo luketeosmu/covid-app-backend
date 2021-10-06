@@ -29,7 +29,6 @@ public class BusinessController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/businesses")
     public Business addBusinesses(@RequestBody Business business){
-
         return businessService.addBusiness(business);
     }
 

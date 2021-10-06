@@ -30,8 +30,15 @@ public class UserController {
     @PostMapping("/users")
     public User addUser(@Valid @RequestBody User user){
         // your code here
-        user.setPassword(encoder.encode(user.getPassword()));
-        return users.save(user);
+        User check = users.findByUsername(user.getUsername()).map(user2 -> {
+            return user2;
+        }).orElse(null);
+        if(check != null){
+            throw new UsernameExistsException(user.getUsername()); 
+        }else{
+            user.setPassword(encoder.encode(user.getPassword()));
+            return users.save(user);
+        }
     }
    
 }

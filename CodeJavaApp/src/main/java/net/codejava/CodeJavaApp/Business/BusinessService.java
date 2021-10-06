@@ -20,14 +20,18 @@ public class BusinessService {
         return businessRepository.findAll();
     }
 
-    public Business addBusiness(@RequestBody Business business){
-        if(!businessRepository.findById(business.getBusiness_id()).isPresent()){
+    public Business addBusiness(Business business){
+        Business check = businessRepository.findByBusinessName(business.getBusinessName()).map(business2 ->{
+            return business2;
+        }).orElse(null);
+
+        if(check != null){
+            throw new BusinessExistsException(business.getBusinessName()); 
+        }else{
             return businessRepository.save(business);
         }
-        else{
-            return null;
-        }
     }
+
 
     public Business updateBusiness(Long businessId, Business newBusiness){
         return businessRepository.findById(businessId).map(restriction -> {restriction.setDescription(newBusiness.getDescription());
