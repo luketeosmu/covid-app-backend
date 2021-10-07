@@ -62,10 +62,7 @@ public class BusinessService {
             throw new UserNotFoundException(userId);
         }
         return businessRepository.findByBusinessIdAndUserId(businessId,userId).map(business2 ->{
-            business2.setDescription(newBusiness.getDescription());
-            business2.setLocation(newBusiness.getLocation());
-            business2.setEmail(newBusiness.getEmail());
-            business2.setMobileNum(newBusiness.getMobileNum());
+            business2.setCategory(newBusiness.getCategory());
             business2.setOutdoorIndoor(newBusiness.getOutdoorIndoor());
             return businessRepository.save(business2);
         }).orElseThrow(()->new BusinessNotFoundException(businessId));

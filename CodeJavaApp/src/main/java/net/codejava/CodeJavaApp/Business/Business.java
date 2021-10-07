@@ -12,18 +12,18 @@ public class Business {
 
     // @Column(nullable = false, unique = true, length = 200)
     private String businessName;
-
+    //category == museum / etc 
     // @Column(nullable = false, length = 200)
-    private String description;
+    private String category;
 
     // @Column(length = 200)
-    private String location;
+    // private String location;
 
-    // @Column(unique = true, length = 45)
-    private String email;
+    // // @Column(unique = true, length = 45)
+    // private String email;
 
-    // @Column(unique = true)
-    private Long mobileNum;
+    // // @Column(unique = true)
+    // private Long mobileNum;
 
     // @Column(nullable = false)
     private Character outdoorIndoor;
@@ -36,30 +36,26 @@ public class Business {
     private User user;
 
 
-    
-    public Business(String businessName, String description, String location, String email, Long mobileNum,
-            Character outdoorIndoor, Long capacity) {
+    public Business(String businessName, String category, Character outdoorIndoor, Long capacity) {
         this.businessName = businessName;
-        this.description = description;
-        this.location = location;
-        this.email = email;
-        this.mobileNum = mobileNum;
+        this.category = category;
         this.outdoorIndoor = outdoorIndoor;
         this.capacity = capacity;
     }
 
-    public Business(Long businessId, String businessName, String description, String location, String email,
-            Long mobileNum, Character outdoorIndoor, Long capacity, User user) {
+
+
+    public Business(Long businessId, String businessName, String category, Character outdoorIndoor, Long capacity,
+            User user) {
         this.businessId = businessId;
         this.businessName = businessName;
-        this.description = description;
-        this.location = location;
-        this.email = email;
-        this.mobileNum = mobileNum;
+        this.category = category;
         this.outdoorIndoor = outdoorIndoor;
         this.capacity = capacity;
         this.user = user;
     }
+
+
 
     public Business() {
     }
@@ -80,37 +76,37 @@ public class Business {
         this.businessName = businessName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCategory() {
+        return category;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getLocation() {
-        return location;
-    }
+    // public String getLocation() {
+    //     return location;
+    // }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
+    // public void setLocation(String location) {
+    //     this.location = location;
+    // }
 
-    public String getEmail() {
-        return email;
-    }
+    // public String getEmail() {
+    //     return email;
+    // }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    // public void setEmail(String email) {
+    //     this.email = email;
+    // }
 
-    public Long getMobileNum() {
-        return mobileNum;
-    }
+    // public Long getMobileNum() {
+    //     return mobileNum;
+    // }
 
-    public void setMobileNum(Long mobileNum) {
-        this.mobileNum = mobileNum;
-    }
+    // public void setMobileNum(Long mobileNum) {
+    //     this.mobileNum = mobileNum;
+    // }
 
     public Character getOutdoorIndoor() {
         return outdoorIndoor;
@@ -134,6 +130,14 @@ public class Business {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Business [businessId=" + businessId + ", businessName=" + businessName + ", capacity=" + capacity
+                + ", category=" + category + ", outdoorIndoor=" + outdoorIndoor + ", user=" + user + "]";
     }
 
 

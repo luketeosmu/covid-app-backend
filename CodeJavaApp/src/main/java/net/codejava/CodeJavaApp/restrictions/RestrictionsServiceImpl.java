@@ -27,8 +27,8 @@ public class RestrictionsServiceImpl implements RestrictionService{
         return restrictionsRepository.save(restrictions);
     }
     @Override
-    public Restrictions updateRestrictions(Long RestrictionsId, Restrictions newRestrictions){
-        return restrictionsRepository.findById(RestrictionsId).map(restriction -> {restriction.setDescription(newRestrictions.getDescription());
+    public Restrictions updateRestrictions(Long RestrictionsId, Restrictions newRestriction){
+        return restrictionsRepository.findById(RestrictionsId).map(restriction -> {restriction.setDescription(newRestriction.getDescription());
             return restrictionsRepository.save(restriction);
         }).orElse(null);
     }

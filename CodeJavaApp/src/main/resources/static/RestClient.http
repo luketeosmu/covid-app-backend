@@ -23,36 +23,32 @@ Authorization: Basic hihi@gmail.com Tester123
 ###
 PUT http://localhost:8080/restrictions/2
 Content-Type: application/json
-Authorization: Basic hihi4@gmail.com:Tester123
+Authorization: Basic hihi@gmail.com:Tester123
 
 {
+
     "description": "The Return of the King"
+
 }
 
 ###
 POST http://localhost:8080/users/1/businesses
 Content-Type: application/json
-Authorization: Basic hihi4@gmail.com:Tester123
+Authorization: Basic hihi@gmail.com:Tester123
 
 {
-    "businessName":"tea party",
-    "description":"better than pasta express",
-    "location":"SMU SOE",
-    "email":"teaparty@gmail.com",
-    "mobileNum":"96969696",
+    "businessName":"turks kebab",
+    "category":"better than pasta express",
     "outdoorIndoor":"o",
     "capacity":"1000"
 }
 ###
 PUT http://localhost:8080/users/1/businesses/1
 Content-Type: application/json
-Authorization: Basic hihi4@gmail.com:Tester123
+Authorization: Basic hihi@gmail.com:Tester123
 
 {
-    "description":"best kebab",
-    "location":"peace centre",
-    "email":"turkskebab@gmail.com",
-    "mobileNum":"91234567",
+    "category":"best kebab",
     "outdoorIndoor":"O"
 }
 
@@ -104,7 +100,7 @@ Authorization: Basic hihi@gmail.com:Tester123
 ###
 POST http://localhost:8080/users
 Content-Type: application/json
-Authorization: Basic hihi@gmail.com:Tester123
+
 
 {
         "username":"hihi4@gmail.com",
