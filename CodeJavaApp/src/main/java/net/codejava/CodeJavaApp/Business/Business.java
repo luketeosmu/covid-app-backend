@@ -13,15 +13,19 @@ public class Business {
     // @Column(nullable = false, unique = true, length = 200)
     private String businessName;
 
+    //Don't need this - change to category
     // @Column(nullable = false, length = 200)
     private String description;
 
+    //Don't need this
     // @Column(length = 200)
     private String location;
 
+    //Don't need this
     // @Column(unique = true, length = 45)
     private String email;
 
+    //Don't need this
     // @Column(unique = true)
     private Long mobileNum;
 
