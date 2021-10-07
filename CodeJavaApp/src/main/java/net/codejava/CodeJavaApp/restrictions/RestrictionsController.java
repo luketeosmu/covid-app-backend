@@ -27,7 +27,12 @@ public class RestrictionsController {
 
     @GetMapping("/restrictions/{restrictionId}")
     public Restrictions getRestriction(@PathVariable(value = "restrictionId") Long restrictionId) {
-        return restrictionSvc.getRestriction(restrictionId);
+
+        Restrictions ret = restrictionSvc.getRestriction(restrictionId);
+        if(ret == null){
+            throw new RestrictionNotFoundException(restrictionId);
+        }
+        return ret;
     }
 
     @ResponseStatus(HttpStatus.CREATED)

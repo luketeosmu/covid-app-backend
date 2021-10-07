@@ -35,7 +35,7 @@ public class User implements UserDetails{
 
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
     
-    @NotNull(message = "Username should not be null")
+    // @NotNull(message = "Username should not be null")
     @Size(min = 5, max = 20, message = "Username should be between 5 and 20 characters")
     private String username;
     
@@ -49,9 +49,9 @@ public class User implements UserDetails{
     @NotNull(message = "last name shouldnt be null")
     private String lastName;
 
-    @NotNull(message = "Authorities should not be null")
+    // @NotNull(message = "Authorities should not be null")
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
-    private String authorities;
+    private String authorities;  
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore

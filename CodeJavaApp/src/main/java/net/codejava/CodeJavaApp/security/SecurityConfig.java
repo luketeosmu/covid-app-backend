@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.PUT, "/restrictions/*").hasRole("ADMIN")
             .antMatchers(HttpMethod.DELETE, "/restrictions/*").hasRole("ADMIN")
             .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-            .antMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
+            .antMatchers(HttpMethod.POST, "/users").permitAll()
             .and()
         .csrf().disable() // CSRF protection is needed only for browser based attacks
         .formLogin().disable()

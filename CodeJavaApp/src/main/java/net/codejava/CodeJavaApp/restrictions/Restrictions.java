@@ -40,6 +40,9 @@ public class Restrictions {
 
     public Restrictions() {
     }
+    public Restrictions(String description) {
+        this.description = description;
+    }
 
 
     public Long getId() {

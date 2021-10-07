@@ -48,7 +48,7 @@ public class RestrictionsServiceTest {
     // public void updateRestriction(){
     //     Restrictions restriction = new Restrictions("Indoor", "Category", "Only 5 pax allowed for social gatherings");
     //     Long restrictionId = 1L;
-    //     Restrictions newRestriction = new Restrictions();
+    //     Restrictions newRestriction = new Restrictions(2L,"outdoor", "Category2" , " 2 pax");
     //     restrictionsService.addRestrictions(restriction);
 
     //     when(restrictions.findById(anyLong())).thenReturn(Optional.of(restriction));
