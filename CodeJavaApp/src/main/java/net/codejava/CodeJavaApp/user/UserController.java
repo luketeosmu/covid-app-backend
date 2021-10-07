@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 @RestController
 public class UserController {
@@ -43,16 +44,33 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable Long id){
-        // User user = users.findbyId(id);
 
-        // // Need to handle "User not found" error using proper HTTP status code
-        // // In this case it should be HTTP 404
-        // if(user == null) throw new UserNotFoundException(id);
-        // return user;
-
-        return users.findById(id).orElse(null);
+        return users.findById(id).orElseThrow(()-> new UserNotFoundException(id));
 
     }
 
-   
+
+    @PutMapping("/users/{userId}")
+    public User updateUser(
+                                 @PathVariable (value = "userId") Long userId,
+                                 @Valid @RequestBody User newUser) {
+        return users.findById(userId).map(user-> {
+            user.setPassword(newUser.getPassword());
+            user.setFirstName(newUser.getFirstName());
+            user.setLastName(newUser.getLastName());
+            return users.save(user);
+        }).orElseThrow(()-> new UserNotFoundException(userId));
+       
+    }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteRestriction(@PathVariable Long id){
+        try{
+            users.deleteById(id);
+         }catch(EmptyResultDataAccessException e) {
+            throw new UserNotFoundException(id);
+         }
+    }
+
+
 }

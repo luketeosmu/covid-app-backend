@@ -21,9 +21,9 @@ Authorization: Basic hihi@gmail.com Tester123
 ###
 
 ###
-PUT http://localhost:8080/restrictions/3
+PUT http://localhost:8080/restrictions/2
 Content-Type: application/json
-Authorization: Basic hihi@gmail.com Tester123
+Authorization: Basic hihi4@gmail.com:Tester123
 
 {
     "description": "The Return of the King"
@@ -32,6 +32,7 @@ Authorization: Basic hihi@gmail.com Tester123
 ###
 POST http://localhost:8080/users/1/businesses
 Content-Type: application/json
+Authorization: Basic hihi4@gmail.com:Tester123
 
 {
     "businessName":"tea party",
@@ -45,7 +46,7 @@ Content-Type: application/json
 ###
 PUT http://localhost:8080/users/1/businesses/1
 Content-Type: application/json
-Authorization: Basic hihi@gmail.com Tester123
+Authorization: Basic hihi4@gmail.com:Tester123
 
 {
     "description":"best kebab",
@@ -59,7 +60,8 @@ Authorization: Basic hihi@gmail.com Tester123
 ###
 
 DELETE http://localhost:8080/users/1/businesses/1
-Authorization: Basic hihi4@gmail.com Tester123
+Authorization: Basic hihi@gmail.com:Tester123
+
 ###
 GET http://localhost:8080/books/1/reviews
 
@@ -84,7 +86,9 @@ Content-Type: application/json
 DELETE http://localhost:8080/restrictions/2
 
 ###
-GET http://localhost:8080/restrictions
+
+GET http://localhost:8080/users/1
+
 
 ###
 POST http://localhost:8080/restrictions
@@ -109,3 +113,20 @@ Authorization: Basic hihi@gmail.com:Tester123
         "lastName": "lastName",
         "authorities": "ROLE_USER"
 }
+
+###
+PUT http://localhost:8080/users/2
+Content-Type: application/json
+
+{
+    "password": "Testing12345",
+    "firstName": "firstname",
+    "lastName": "lasterName"
+}
+
+###
+
+###
+DELETE http://localhost:8080/users/2
+
+###

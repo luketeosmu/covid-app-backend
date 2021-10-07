@@ -83,9 +83,10 @@ class RestrictionsIntegrationTest {
     public void addRestriction_Success() throws Exception {
         URI uri = new URI(baseUrl + port + "/restrictions");
         Restrictions restriction = new Restrictions("Indoor", "category", "description");
-//        users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
+        users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
 
-        ResponseEntity<Restrictions> result = restTemplate.postForEntity(uri, restriction, Restrictions.class);
+        ResponseEntity<Restrictions> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
+        .postForEntity(uri, restriction, Restrictions.class);
 
         assertEquals(201, result.getStatusCode().value());
         assertEquals(restriction.getDescription(), result.getBody().getDescription());
@@ -116,8 +117,10 @@ class RestrictionsIntegrationTest {
     public void updateRestriction_ValidRestrictionId_Success() throws Exception {
         Restrictions restriction = restrictions.save(new Restrictions("Indoor", "category", "description"));
         URI uri = new URI(baseUrl + port + "/restrictions/" + restriction.getId().longValue());
+        users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
         Restrictions newRestrictionInfo = new Restrictions("Indoor", "category", "new description");
-        ResponseEntity<Restrictions> result = restTemplate.exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
+        ResponseEntity<Restrictions> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
+        .exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
 
         assertEquals(200, result.getStatusCode().value());
         assertEquals(newRestrictionInfo.getDescription(), result.getBody().getDescription());
@@ -127,14 +130,9 @@ class RestrictionsIntegrationTest {
     public void updateRestriction_InvalidRestrictionId_Failure() throws Exception {
         URI uri = new URI(baseUrl + port + "/restrictions/1");
         Restrictions newRestrictionInfo = new Restrictions("Indoor", "category", "description");
-        ResponseEntity<Restrictions> result = restTemplate.exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
+        users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
+        ResponseEntity<Restrictions> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
+        .exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
         assertEquals(404, result.getStatusCode().value());
     }
 }
-/*
-users.save(new User("admin", encoder.encode("goodpassword"), "ROLE_ADMIN"));
-
-		ResponseEntity<Book> result = restTemplate.withBasicAuth("admin", "goodpassword")
-										.postForEntity(uri, book, Book.class);
-			
-*/
