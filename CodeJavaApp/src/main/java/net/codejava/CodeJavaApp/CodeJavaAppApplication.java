@@ -30,6 +30,8 @@ public class CodeJavaAppApplication {
 		BusinessRepository businesses = ctx.getBean(BusinessRepository.class);
         System.out.println("[Add user]: " + users.save(
             new User("hihi@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
+        System.out.println("[Add user]: " + users.save(
+            new User("hihi4@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
         System.out.println("[Add RESTRICTIONS]: " + restrictions.save(new Restrictions("ind", "nim","woi")));
 
     }

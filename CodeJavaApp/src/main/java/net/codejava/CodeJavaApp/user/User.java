@@ -51,7 +51,7 @@ public class User implements UserDetails{
 
     // @NotNull(message = "Authorities should not be null")
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
-    private String authorities;
+    private String authorities;  
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
