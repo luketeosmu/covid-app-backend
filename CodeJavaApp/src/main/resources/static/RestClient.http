@@ -11,6 +11,7 @@ DELETE http://localhost:8080/books/1
 ###
 POST http://localhost:8080/restrictions
 Content-Type: application/json
+Authorization: Basic hihi@gmail.com Tester123
 
 { 
     "category": "managing arrival",
@@ -20,7 +21,7 @@ Content-Type: application/json
 ###
 
 ###
-PUT http://localhost:8080/restrictions/2
+PUT http://localhost:8080/restrictions/3
 Content-Type: application/json
 Authorization: Basic hihi@gmail.com Tester123
 
@@ -42,7 +43,7 @@ Content-Type: application/json
     "capacity":"1000"
 }
 ###
-PUT http://localhost:8080/users/1/businesses/2
+PUT http://localhost:8080/users/1/businesses/1
 Content-Type: application/json
 Authorization: Basic hihi@gmail.com Tester123
 
@@ -58,6 +59,7 @@ Authorization: Basic hihi@gmail.com Tester123
 ###
 
 DELETE http://localhost:8080/users/1/businesses/1
+Authorization: Basic hihi4@gmail.com Tester123
 ###
 GET http://localhost:8080/books/1/reviews
 
@@ -87,6 +89,7 @@ GET http://localhost:8080/restrictions
 ###
 POST http://localhost:8080/restrictions
 Content-Type: application/json
+Authorization: Basic hihi@gmail.com:Tester123
 
 {
         "locationSetting":"Indoors",
@@ -97,9 +100,9 @@ Content-Type: application/json
 ###
 POST http://localhost:8080/users
 Content-Type: application/json
+Authorization: Basic hihi@gmail.com:Tester123
 
 {
-
         "username":"hihi4@gmail.com",
         "password": "Tester123",
         "firstName":"firstName",
