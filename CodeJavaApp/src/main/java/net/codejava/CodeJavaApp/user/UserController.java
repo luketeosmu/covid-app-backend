@@ -42,10 +42,15 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/{id}")
-    public User getUser(@PathVariable Long id){
+    // @GetMapping("/users/{id}")
+    // public User getUser(@PathVariable Long id, @RequestBody String username){
+    //     return users.findById(id).orElseThrow(()-> new UserNotFoundException(id));
 
-        return users.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+    // }
+
+    @GetMapping("/users/search")
+    public User getUser(@Valid @RequestBody User user){
+        return users.findByUsername(user.getUsername()).orElseThrow(()-> new UserNotFoundException(1L));
 
     }
 

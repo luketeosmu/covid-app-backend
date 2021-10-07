@@ -39,14 +39,14 @@ public class User implements UserDetails{
     @Size(min = 5, max = 20, message = "Username should be between 5 and 20 characters")
     private String username;
     
-    @NotNull(message = "Password should not be null")
+    // @NotNull(message = "Password should not be null")
     @Size(min = 8, message = "Password should be at least 8 characters")
     private String password;
 
-    @NotNull(message = "first name shouldnt be null")
+    // @NotNull(message = "first name shouldnt be null")
     private String firstName;
 
-    @NotNull(message = "last name shouldnt be null")
+    // @NotNull(message = "last name shouldnt be null")
     private String lastName;
 
     // @NotNull(message = "Authorities should not be null")
@@ -63,6 +63,10 @@ public class User implements UserDetails{
         this.firstName = firstName;
         this.lastName = lastName;
         this.authorities = authorities;
+    }
+
+    public User(String username){
+        this.username = username;
     }
 
     /* Return a collection of authorities granted to the user.

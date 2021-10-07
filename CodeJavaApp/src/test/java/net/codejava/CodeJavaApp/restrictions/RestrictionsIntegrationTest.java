@@ -128,7 +128,7 @@ class RestrictionsIntegrationTest {
 
     @Test
     public void updateRestriction_InvalidRestrictionId_Failure() throws Exception {
-        URI uri = new URI(baseUrl + port + "/restrictions/1");
+        URI uri = new URI(baseUrl + port + "/restrictions/2");
         Restrictions newRestrictionInfo = new Restrictions("Indoor", "category", "description");
         users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
         ResponseEntity<Restrictions> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
