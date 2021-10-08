@@ -40,7 +40,7 @@ public class User implements UserDetails{
     private String username;
     
     @NotNull(message = "Password should not be null")
-    @Size(min = 8, message = "Password should be at least 8 characters")
+    @Size(min = 8, max =20, message = "Password should be at least 8 characters")
     private String password;
 
     @NotNull(message = "first name shouldnt be null")

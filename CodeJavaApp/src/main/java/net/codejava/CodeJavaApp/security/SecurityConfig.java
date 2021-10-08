@@ -28,7 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         throws Exception {
         auth
         .userDetailsService(userDetailsService)
-        .passwordEncoder(encoder());
+        .passwordEncoder(encoder())
+        .and()
+        .inMemoryAuthentication().withUser("admin").password(encoder().encode("admin")).authorities("USER", "ADMIN");
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -48,8 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.POST, "/users").permitAll()
             .and()
         .csrf().disable() // CSRF protection is needed only for browser based attacks
-        .formLogin().disable()
-        .headers().disable()
+        .formLogin()//.disable()
+        //.headers().disable()
         ;
     }
     // @Override
