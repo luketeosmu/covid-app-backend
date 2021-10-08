@@ -46,10 +46,15 @@ public class UserController {
         
         // }
         
-        @CrossOrigin(origins = "http://localhost:3000")
-        @PostMapping("/users/search")
-        public User getUser(@Valid @RequestBody User user){
-        return users.getUser(user);
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/users/search")
+    public User getUser(@Valid @RequestBody User user){
+        User user2 = users.getUser(user);
+        if(user2 == null){
+            throw new UserNotFoundException(user.getUsername());
+        }else{
+            return user2;
+        }
     }
 
 

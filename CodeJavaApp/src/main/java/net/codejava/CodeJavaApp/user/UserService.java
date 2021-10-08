@@ -20,16 +20,19 @@ public class UserService {
     }
 
     public User addUser(User user) {
-        List<User> sameusers =  users.findByUsername(user.getUsername());
-        if(sameusers.size() == 0)
+        User sameusers =  users.findByUsername(user.getUsername()).orElse(null);
+        if(sameusers == null){
+            user.setPassword(encoder.encode(user.getPassword()));
             return users.save(user);
-        else
+        }
+        else{
             return null;
+        }
     }
 
 
     public User getUser(User user){
-        return users.findByUsername(user.getUsername()).orElseThrow(()-> new UserNotFoundException(user.getUsername()));
+        return users.findByUsername(user.getUsername()).orElse(null);
     }
 
     public User updateUser(Long userId,User newUser) {

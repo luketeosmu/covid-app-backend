@@ -12,11 +12,10 @@ public class Business {
 
     // @Column(nullable = false, unique = true, length = 200)
     private String businessName;
-
+    //category == museum / etc 
     // @Column(nullable = false, length = 200)
     private String category;
 
-    //Don't need this
     // @Column(length = 200)
     // private String location;
 
