@@ -8,39 +8,47 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 
+
 @RestController
 public class UserController {
     private UserService users; 
     private BCryptPasswordEncoder encoder;
-
+    
     public UserController(UserService users, BCryptPasswordEncoder encoder){
         this.users = users;
         this.encoder = encoder;
     }
-
+    
     @GetMapping("/users")
     public List<User> getUsers() {
         return users.getUsers();
     }
-
+    
     /**
-    * Using BCrypt encoder to encrypt the password for storage 
-    * @param user
+     * Using BCrypt encoder to encrypt the password for storage 
+     * @param user
      * @return
      */
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/users")
     public User addUser(@Valid @RequestBody User user){
-        return users.addUser(user);
+        User user2 = users.addUser(user);
+        if(user2 == null){
+            throw new UsernameExistsException(user.getUsername());
+        }else{
+            return user2;
+        }
     }
-
+    
     // @GetMapping("/users/{id}")
     // public User getUser(@PathVariable Long id, @RequestBody String username){
-    //     return users.findById(id).orElseThrow(()-> new UserNotFoundException(id));
-
-    // }
-
-    @GetMapping("/users/search")
-    public User getUser(@Valid @RequestBody User user){
+        //     return users.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+        
+        // }
+        
+        @CrossOrigin(origins = "http://localhost:3000")
+        @PostMapping("/users/search")
+        public User getUser(@Valid @RequestBody User user){
         return users.getUser(user);
     }
 

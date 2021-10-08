@@ -20,11 +20,13 @@ public class UserService {
     }
 
     public User addUser(User user) {
-        return users.findByUsername(user.getUsername()).map(user2 -> {
-            user.setPassword(encoder.encode(user.getPassword()));
+        List<User> sameusers =  users.findByUsername(user.getUsername());
+        if(sameusers.size() == 0)
             return users.save(user);
-        }).orElseThrow(()-> new UsernameExistsException(user.getUsername()));
+        else
+            return null;
     }
+
 
     public User getUser(User user){
         return users.findByUsername(user.getUsername()).orElseThrow(()-> new UserNotFoundException(user.getUsername()));

@@ -69,6 +69,11 @@ public class User implements UserDetails{
         this.username = username;
     }
 
+    public User(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
+
     /* Return a collection of authorities granted to the user.
     */
     @Override

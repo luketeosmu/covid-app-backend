@@ -63,9 +63,8 @@ Authorization: Basic hihi@gmail.com:Tester123
 GET http://localhost:8080/users
 
 ### get specific users
-GET http://localhost:8080/users/search
+POST http://localhost:8080/users/search
 Content-Type: application/json
-# Authorization:Basic hihi4@gmail.com:Tester123
 
 {
     "username":"hihi@gmail.com",
@@ -75,7 +74,7 @@ Content-Type: application/json
 ###
 POST http://localhost:8080/users
 Content-Type: application/json
-Authorization: Basic hihi@gmail.com:Tester123
+# Authorization: Basic hihi@gmail.com:Tester123
 
 {
         "username":"hihi4@gmail.com",
