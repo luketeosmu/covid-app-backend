@@ -1,14 +1,8 @@
-GET http://localhost:8080
+GET http://localhost:8080/restrictions
 
 
 ###
-GET http://localhost:8080/users/1/businesses
 
-###
-DELETE http://localhost:8080/books/1
-
-
-###
 POST http://localhost:8080/restrictions
 Content-Type: application/json
 Authorization: Basic hihi@gmail.com Tester123
@@ -19,8 +13,6 @@ Authorization: Basic hihi@gmail.com Tester123
     "locationSetting": "outdoor"
 }
 ###
-
-###
 PUT http://localhost:8080/restrictions/2
 Content-Type: application/json
 Authorization: Basic hihi@gmail.com:Tester123
@@ -30,6 +22,15 @@ Authorization: Basic hihi@gmail.com:Tester123
     "description": "The Return of the King"
 
 }
+
+###
+DELETE http://localhost:8080/restrictions/2
+
+
+
+
+###
+GET http://localhost:8080/users/1/businesses
 
 ###
 POST http://localhost:8080/users/1/businesses
@@ -58,49 +59,23 @@ Authorization: Basic hihi@gmail.com:Tester123
 DELETE http://localhost:8080/users/1/businesses/1
 Authorization: Basic hihi@gmail.com:Tester123
 
-###
-GET http://localhost:8080/books/1/reviews
+### get all users
+GET http://localhost:8080/users
 
-###
-POST http://localhost:8080/books/2/reviews
+### get specific users
+GET http://localhost:8080/users/search
 Content-Type: application/json
-Authorization: Basic gooduser:goodpassword
+# Authorization:Basic hihi4@gmail.com:Tester123
 
 {
-    "review": "Terrible book :)"
-}
-
-###
-PUT http://localhost:8080/books/2/reviews/2
-Content-Type: application/json
-
-{
-    "review": "Should be bad!"
-}
-
-###
-DELETE http://localhost:8080/restrictions/2
-
-###
-
-GET http://localhost:8080/users/1
-
-
-###
-POST http://localhost:8080/restrictions
-Content-Type: application/json
-Authorization: Basic hihi@gmail.com:Tester123
-
-{
-        "locationSetting":"Indoors",
-        "category" : "Managing Arrivals",
-        "description" : "nimama"
+    "username":"hihi@gmail.com",
+    "password":"Tester123"
 }
 
 ###
 POST http://localhost:8080/users
 Content-Type: application/json
-
+Authorization: Basic hihi@gmail.com:Tester123
 
 {
         "username":"hihi4@gmail.com",
@@ -119,8 +94,6 @@ Content-Type: application/json
     "firstName": "firstname",
     "lastName": "lasterName"
 }
-
-###
 
 ###
 DELETE http://localhost:8080/users/2
