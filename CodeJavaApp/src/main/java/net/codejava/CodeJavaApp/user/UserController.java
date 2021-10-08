@@ -10,17 +10,17 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 @RestController
 public class UserController {
-    private UserRepository users;
+    private UserService users; 
     private BCryptPasswordEncoder encoder;
 
-    public UserController(UserRepository users, BCryptPasswordEncoder encoder){
+    public UserController(UserService users, BCryptPasswordEncoder encoder){
         this.users = users;
         this.encoder = encoder;
     }
 
     @GetMapping("/users")
     public List<User> getUsers() {
-        return users.findAll();
+        return users.getUsers();
     }
 
     /**
@@ -30,16 +30,7 @@ public class UserController {
      */
     @PostMapping("/users")
     public User addUser(@Valid @RequestBody User user){
-        // your code here
-        User check = users.findByUsername(user.getUsername()).map(user2 -> {
-            return user2;
-        }).orElse(null);
-        if(check != null){
-            throw new UsernameExistsException(user.getUsername()); 
-        }else{
-            user.setPassword(encoder.encode(user.getPassword()));
-            return users.save(user);
-        }
+        return users.addUser(user);
     }
 
     // @GetMapping("/users/{id}")
@@ -50,8 +41,7 @@ public class UserController {
 
     @GetMapping("/users/search")
     public User getUser(@Valid @RequestBody User user){
-        return users.findByUsername(user.getUsername()).orElseThrow(()-> new UserNotFoundException(1L));
-
+        return users.getUser(user);
     }
 
 
@@ -59,19 +49,16 @@ public class UserController {
     public User updateUser(
                                  @PathVariable (value = "userId") Long userId,
                                  @Valid @RequestBody User newUser) {
-        return users.findById(userId).map(user-> {
-            user.setPassword(newUser.getPassword());
-            user.setFirstName(newUser.getFirstName());
-            user.setLastName(newUser.getLastName());
-            return users.save(user);
-        }).orElseThrow(()-> new UserNotFoundException(userId));
+        return users.updateUser(userId, newUser);
        
     }
 
+
+
     @DeleteMapping("/users/{id}")
-    public void deleteRestriction(@PathVariable Long id){
+    public void deleteUser(@PathVariable Long id){
         try{
-            users.deleteById(id);
+            users.deleteUser(id);
          }catch(EmptyResultDataAccessException e) {
             throw new UserNotFoundException(id);
          }
