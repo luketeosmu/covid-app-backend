@@ -31,7 +31,7 @@ public class CodeJavaAppApplication {
         System.out.println("[Add user]: " + users.save(
             new User("hihi@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
         System.out.println("[Add user]: " + users.save(
-            new User("hihi4@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
+            new User("hihi4@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getPassword());
         System.out.println("[Add RESTRICTIONS]: " + restrictions.save(new Restrictions("ind", "nim","woi")));
 
     }

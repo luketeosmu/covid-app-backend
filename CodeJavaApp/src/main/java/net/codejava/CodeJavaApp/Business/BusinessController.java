@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import net.codejava.CodeJavaApp.user.*;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class BusinessController {
     
@@ -49,6 +50,7 @@ public class BusinessController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/users/{userid}/businesses")
     public Business addBusinesses(@PathVariable (value = "userid") Long userId,@RequestBody @Valid Business business){
         return businessService.addBusiness(userId, business);

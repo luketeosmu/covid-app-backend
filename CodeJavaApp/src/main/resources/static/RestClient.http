@@ -6,6 +6,7 @@ GET http://localhost:8080/restrictions
 POST http://localhost:8080/restrictions
 Content-Type: application/json
 Authorization: Basic hihi@gmail.com Tester123
+Access-Control-Allow-Origin: *
 
 { 
     "category": "managing arrival",
@@ -30,7 +31,7 @@ DELETE http://localhost:8080/restrictions/2
 
 
 ###
-GET http://localhost:8080/users/1/businesses
+GET http://localhost:8080/users/4/businesses
 
 ###
 POST http://localhost:8080/users/1/businesses
@@ -38,7 +39,7 @@ Content-Type: application/json
 Authorization: Basic hihi@gmail.com:Tester123
 
 {
-    "businessName":"turks kebab",
+    "businessName":"turks kebabss",
     "category":"better than pasta express",
     "outdoorIndoor":"o",
     "capacity":"1000"
@@ -74,10 +75,11 @@ Content-Type: application/json
 ###
 POST http://localhost:8080/users
 Content-Type: application/json
+Access-Control-Allow-Origin: *
 # Authorization: Basic hihi@gmail.com:Tester123
 
 {
-        "username":"hihi4@gmail.com",
+        "username":"hihi8@gmail.com",
         "password": "Tester123",
         "firstName":"firstName",
         "lastName": "lastName",

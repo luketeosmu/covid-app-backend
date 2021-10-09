@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-
+@CrossOrigin
 @RestController
 public class UserController {
     private UserService users; 
@@ -29,7 +29,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin
     @PostMapping("/users")
     public User addUser(@Valid @RequestBody User user){
         User user2 = users.addUser(user);
