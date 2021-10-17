@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .userDetailsService(userDetailsService)
         .passwordEncoder(encoder());
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -37,44 +38,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and() //  "and()"" method allows us to continue configuring the parent
         .authorizeRequests()
             //authorization for business
+            .antMatchers(HttpMethod.GET, "/users/*/businesses/*").hasAnyRole("ADMIN", "USER")
+            .antMatchers(HttpMethod.GET, "/users/*/businesses").hasRole("ADMIN")
             .antMatchers(HttpMethod.POST, "/users/*/businesses").hasAnyRole("ADMIN", "USER")
-            .antMatchers(HttpMethod.PUT, "/users/*/businesses/*").hasRole("ADMIN")
-            .antMatchers(HttpMethod.DELETE, "/users/*/businesses/*").hasRole("ADMIN")
+            .antMatchers(HttpMethod.PUT, "/users/*/businesses/*").hasAnyRole("ADMIN", "USER")
+            .antMatchers(HttpMethod.DELETE, "/users/*/businesses/*").hasAnyRole("ADMIN", "USER")
             //authorization for restrictions
-            .antMatchers(HttpMethod.GET, "/restrictions").hasRole("ADMIN")
+            .antMatchers(HttpMethod.GET, "/restrictions").hasAnyRole("ADMIN", "USER")
             .antMatchers(HttpMethod.POST, "/restrictions").hasRole("ADMIN")
             .antMatchers(HttpMethod.PUT, "/restrictions/*").hasRole("ADMIN")
             .antMatchers(HttpMethod.DELETE, "/restrictions/*").hasRole("ADMIN")
+            //authentication and authorization for users
             .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
             .antMatchers(HttpMethod.GET, "/users/search").permitAll()
             .antMatchers(HttpMethod.POST, "/users").permitAll()
+            .antMatchers(HttpMethod.PUT, "/users").hasAnyRole("ADMIN", "USER")
+            .antMatchers(HttpMethod.DELETE, "/users").hasAnyRole("ADMIN", "USER")
             .and()
         .csrf().disable() // CSRF protection is needed only for browser based attacks
         .formLogin().disable()
         .headers().disable()
         ;
     }
-    // @Override
-    // protected void configure(HttpSecurity http) throws Exception {
-    //     http
-    //     .httpBasic()
-    //         .and() //  "and()"" method allows us to continue configuring the parent
-    //     .authorizeRequests()
-    //         .antMatchers(HttpMethod.POST, "/businesses").permitAll()
-    //         .antMatchers(HttpMethod.PUT, "/businesses/*").permitAll()
-    //         .antMatchers(HttpMethod.DELETE, "/businesses/*").permitAll()
-    //         // your code here
-    //         .antMatchers(HttpMethod.POST, "/restrictions").authenticated()
-    //         .antMatchers(HttpMethod.PUT, "/restrictions/*").permitAll()
-    //         .antMatchers(HttpMethod.DELETE, "/restrictions/*").permitAll()
-    //         .antMatchers(HttpMethod.GET, "/users").permitAll()
-    //         .antMatchers(HttpMethod.POST, "/users").permitAll()
-    //         .and()
-    //     .csrf().disable() // CSRF protection is needed only for browser based attacks
-    //     .formLogin().disable()
-    //     .headers().disable()
-    //     ;
-    // }
 
     /**
      * @Bean annotation is used to declare a PasswordEncoder bean in the Spring application context. 
