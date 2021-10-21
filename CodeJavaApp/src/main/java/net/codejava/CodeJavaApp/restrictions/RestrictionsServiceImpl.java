@@ -13,7 +13,6 @@ public class RestrictionsServiceImpl implements RestrictionService{
     @Autowired
     private RestrictionsRepository restrictionsRepository;
 
-//    private List<Restrictions> Restrictionses = new ArrayList<>();
     @Override
     public List<Restrictions> getAllRestrictions(){
         return restrictionsRepository.findAll();
@@ -28,7 +27,8 @@ public class RestrictionsServiceImpl implements RestrictionService{
     }
     @Override
     public Restrictions updateRestrictions(Long RestrictionsId, Restrictions newRestriction){
-        return restrictionsRepository.findById(RestrictionsId).map(restriction -> {restriction.setDescription(newRestriction.getDescription());
+        return restrictionsRepository.findById(RestrictionsId).map(restriction -> {
+            restriction.setDescription(newRestriction.getDescription());
             return restrictionsRepository.save(restriction);
         }).orElse(null);
     }

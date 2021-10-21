@@ -15,37 +15,67 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    /**
+     * Get a list of all users (ADMIN rights)
+     * 
+     * @return a List<User> of users 
+     */
     public List<User> getUsers() {
         return users.findAll();
     }
 
+    /**
+     * Takes in a user and check if the username already exists
+     * if exist return null else save the user with encoded password and return
+     * 
+     * @param user
+     * @return the added user / null 
+     */
     public User addUser(User user) {
-        User sameusers =  users.findByUsername(user.getUsername()).orElse(null);
-        if(sameusers == null){
+        User sameuser = users.findByUsername(user.getUsername()).orElse(null);
+        if (sameuser == null) {
             user.setPassword(encoder.encode(user.getPassword()));
             return users.save(user);
-        }
-        else{
+        } else {
             return null;
         }
     }
-
-
-    public User getUser(User user){
-        return users.findByUsername(user.getUsername()).orElse(null);
+    /**
+     * This is a special post method for axios to call for the user 
+     * The body will consist of the username and password 
+     * check if username and password matches an existing user then return 
+     * @param user
+     * @return user found / null 
+     */
+    public User getUser(User user) {
+        return users.findByUsername(user.getUsername()).map(user2-> {
+            if (encoder.matches(user.getPassword(), user2.getPassword())){
+                return user2;
+            }
+            return null;
+        }).orElse(null);
     }
-
-    public User updateUser(Long userId,User newUser) {
-        return users.findById(userId).map(user-> {
-            user.setPassword(newUser.getPassword());
+    /**
+     * if user is found then updates password firstname and lastname 
+     * then save and return the user -> if user not found then throw exception 
+     * @param userId
+     * @param newUser
+     * @return User/ null / thorw usernotfoundexception 
+     */
+    public User updateUser(Long userId, User newUser) {
+        return users.findById(userId).map(user -> {
+            user.setPassword(encoder.encode(newUser.getPassword()));
             user.setFirstName(newUser.getFirstName());
             user.setLastName(newUser.getLastName());
             return users.save(user);
-        }).orElseThrow(()-> new UserNotFoundException(userId));
-       
+        }).orElseThrow(() -> new UserNotFoundException(userId));
     }
 
-    public void deleteUser(Long userId){
+    /**
+     * deleteUser with id 
+     * @param userId
+     */
+    public void deleteUser(Long userId) {
         users.deleteById(userId);
     }
 }

@@ -12,19 +12,9 @@ public class Business {
 
     // @Column(nullable = false, unique = true, length = 200)
     private String businessName;
-    //category == museum / etc 
+
     // @Column(nullable = false, length = 200)
     private String category;
-
-    // @Column(length = 200)
-    // private String location;
-
-    // // @Column(unique = true, length = 45)
-    // private String email;
-
-    // // @Column(unique = true)
-    // private Long mobileNum;
-
     // @Column(nullable = false)
     private Character outdoorIndoor;
 

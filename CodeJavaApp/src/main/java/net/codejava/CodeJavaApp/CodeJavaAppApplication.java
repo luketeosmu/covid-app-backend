@@ -28,11 +28,13 @@ public class CodeJavaAppApplication {
         UserRepository users = ctx.getBean(UserRepository.class);
 		RestrictionsRepository restrictions = ctx.getBean(RestrictionsRepository.class);
 		BusinessRepository businesses = ctx.getBean(BusinessRepository.class);
+        User newUser = new User("hihihi4@gmail.com", "Tester123", "john", "luke234", "ROLE_ADMIN");
         System.out.println("[Add user]: " + users.save(
             new User("hihi@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getUsername());
         System.out.println("[Add user]: " + users.save(
             new User("hihi4@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN")).getPassword());
         System.out.println("[Add RESTRICTIONS]: " + restrictions.save(new Restrictions("ind", "nim","woi")));
+        System.out.println(newUser.getPassword());
 
     }
 }

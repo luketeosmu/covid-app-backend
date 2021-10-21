@@ -39,12 +39,6 @@ public class UserController {
             return user2;
         }
     }
-    
-    // @GetMapping("/users/{id}")
-    // public User getUser(@PathVariable Long id, @RequestBody String username){
-        //     return users.findById(id).orElseThrow(()-> new UserNotFoundException(id));
-        
-        // }
         
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/users/search")
@@ -67,7 +61,11 @@ public class UserController {
     }
 
 
-
+    /**
+     * if there's no user to be deleted the exception will be caught 
+     * and throws a UserNotFoundException
+     * @param id
+     */
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id){
         try{
