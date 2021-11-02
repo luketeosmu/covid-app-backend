@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Login - G1T8 User</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous" />
+</head>
+<body>
+<div class="container-fluid text-center">
+    <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
+        <div>
+            <h4><a th:href="@{/oauth2/authorization/google}">Login with Google</a></h4>
+        </div>
+<!--        if the user puts the wrong username and password-->
+        <div th:if="${param.error}">
+            <p class="text-danger">Invalid username or password</p>
+        </div>
+<!--        logout message when the user logs out-->
+        <div th:if="${param.logout}">
+            <p class="text-warning">You have been logged out.</p>
+        </div>
+        <div class="border border-secondary p-3 rounded">
+            <p>Please Login</p>
+        </div>
+        <p>
+            <input type="email" name="email" class="form-control" placeholder="E-mail" required autofocus/>
+        </p>
+        <p>
+            <input type="password" name="password" class="form-control" placeholder="Password" required />
+        </p>
+<!--        checkbox for 'Remember Me' feature-->
+        <p>
+            <input type="checkbox" name="remember-me" />&nbsp;Remember Me
+        </p>
+        <p>
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </p>
+    </form>
+</div>
+</body>
+</html>

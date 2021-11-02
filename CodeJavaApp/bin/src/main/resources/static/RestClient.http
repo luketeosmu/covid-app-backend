@@ -1,0 +1,104 @@
+GET http://localhost:8080/restrictions
+
+
+###
+
+POST http://localhost:8080/restrictions
+Content-Type: application/json
+Authorization: Basic hihi@gmail.com Tester123
+Access-Control-Allow-Origin: *
+
+{ 
+    "category": "managing arrival",
+    "description":"testing 345345",
+    "locationSetting": "outdoor"
+}
+###
+PUT http://localhost:8080/restrictions/2
+Content-Type: application/json
+Authorization: Basic hihi@gmail.com:Tester123
+
+{
+
+    "description": "The Return of the King"
+
+}
+
+###
+DELETE http://localhost:8080/restrictions/2
+
+
+
+
+###
+GET http://localhost:8080/users/4/businesses
+
+###
+POST http://localhost:8080/users/1/businesses
+Content-Type: application/json
+Authorization: Basic hihi@gmail.com:Tester123
+
+{
+    "businessName":"turks kebabss",
+    "category":"better than pasta express",
+    "outdoorIndoor":"o",
+    "capacity":"1000"
+}
+###
+PUT http://localhost:8080/users/1/businesses/1
+Content-Type: application/json
+Authorization: Basic hihi@gmail.com:Tester123
+
+{
+    "category":"best kebab",
+    "outdoorIndoor":"O"
+}
+
+###
+###
+
+DELETE http://localhost:8080/users/1/businesses/1
+Authorization: Basic hihi@gmail.com:Tester123
+
+### get all users
+GET http://localhost:8080/users
+Authorization: Basic hihi@gmail.com:Tester123
+
+
+### get specific users
+POST http://localhost:8080/users/search
+Content-Type: application/json
+
+{
+    "username":"hihi@gmail.com",
+    "password":"Tester123"
+}
+
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+Access-Control-Allow-Origin: *
+# Authorization: Basic hihi@gmail.com:Tester123
+
+{
+        "username":"hihi8@gmail.com",
+        "password": "Tester123",
+        "firstName":"firstName",
+        "lastName": "lastName",
+        "authorities": "ROLE_USER"
+}
+
+###
+PUT http://localhost:8080/users/2
+Content-Type: application/json
+
+{
+    "password": "Testing12345",
+    "firstName": "firstname",
+    "lastName": "lasterName"
+}
+
+###
+DELETE http://localhost:8080/users/2
+
+###
