@@ -31,7 +31,7 @@ DELETE http://localhost:8080/restrictions/2
 
 
 ###
-GET http://localhost:8080/users/4/businesses
+GET http://localhost:8080/users/1/businesses
 
 ###
 POST http://localhost:8080/users/1/businesses
@@ -101,4 +101,30 @@ Content-Type: application/json
 ###
 DELETE http://localhost:8080/users/2
 
+### employee
+
+POST http://localhost:8080/users/1/businesses/1/employees
+Content-Type: application/json
+
+{
+    "id":1,
+    "name" : "john",
+    "vaxStatus": true,
+    "fetDate" : "2021/09/05"
+}
+
 ###
+GET http://localhost:8080/users/1/businesses/1/employees
+
+
+###
+
+PUT http://localhost:8080/users/1/businesses/1/employees/1
+Content-Type: application/json
+
+{
+
+    "name" : "john luke",
+    "vaxStatus": true,
+    "fetDate" : "2021/08/18"
+}
