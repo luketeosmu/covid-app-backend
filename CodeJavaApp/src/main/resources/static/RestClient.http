@@ -19,8 +19,9 @@ Content-Type: application/json
 Authorization: Basic hihi@gmail.com:Tester123
 
 {
-
-    "description": "The Return of the King"
+    "category": "",
+    "description": "The Return of the King",
+    "locationSetting": ""
 
 }
 
@@ -94,9 +95,11 @@ PUT http://localhost:8080/users/2
 Content-Type: application/json
 
 {
+    "username":"dummyvalue@gmail.com",
     "password": "Testing12345",
     "firstName": "firstname",
-    "lastName": "lasterName"
+    "lastName": "lasterName",
+    "authorities":""
 }
 
 ###

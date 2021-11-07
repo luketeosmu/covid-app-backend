@@ -3,6 +3,7 @@ package net.codejava.CodeJavaApp.Business;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,14 +18,16 @@ public class Business {
     private Long businessId;
 
     // @Column(nullable = false, unique = true, length = 200)
+    @NotNull(message = "Enter business name ")
     private String businessName;
 
-    // @Column(nullable = false, length = 200)
+    @NotNull
     private String category;
-    // @Column(nullable = false)
+
+    @NotNull
     private Character outdoorIndoor;
 
-    // @Column(nullable = false)
+    @NotNull
     private Long capacity;
 
     @ManyToOne

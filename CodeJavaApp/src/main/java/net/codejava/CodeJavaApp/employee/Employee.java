@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
 import net.codejava.CodeJavaApp.user.*;
@@ -22,13 +23,15 @@ import net.codejava.CodeJavaApp.user.*;
 
 @Entity
 public class Employee {
-    @Id 
+    @Id @NotNull(message = "Please enter your work ID")
     private Long id; 
 
     private String name; 
 
+    @NotNull(message = "Enter your vaccination status ")
     private boolean vaxStatus; 
     
+
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date fetDate;
 

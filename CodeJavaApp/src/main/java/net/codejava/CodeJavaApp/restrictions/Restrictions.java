@@ -18,12 +18,13 @@ public class Restrictions {
     private  @Id @GeneratedValue (strategy = GenerationType.IDENTITY) Long id;
     
     //applies to indoor/outdoor/all 
-    // @NotNull(message = "Attraction setting should not be empty")
+    @NotNull(message = "Attraction setting should not be empty")
     @Size(max = 7, message = "Attraction setting should be Indoor/Outdoor/All only")
     private String locationSetting;
-    // @NotNull(message = "Category should not be empty")
+
+    @NotNull(message = "Category should not be empty")
     private String category;
-    // @NotNull
+    @NotNull
     private String description;
 
     public Restrictions(String locationSetting, String category,String description) {
