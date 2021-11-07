@@ -1,6 +1,6 @@
 package net.codejava.CodeJavaApp.employee;
 import java.util.*;
-
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -28,6 +28,14 @@ public class EmployeeServiceImpl {
         return employees.findByIdAndUserId(employeeId, userId).map(employee2 ->{
             return employee2;
         }).orElseThrow(()-> new EmployeeNotFoundException(employeeId));
+    }
+
+    public List<Employee> findbyExpireFetDate(long userid){
+        return employees.listExpiredTestEmployees(userid); 
+    }
+    
+    public List<Employee> listTodayTests(long userid){
+        return employees.listTodayTests(userid); 
     }
 
     

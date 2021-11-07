@@ -1,5 +1,8 @@
 package net.codejava.CodeJavaApp.employee;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -39,6 +42,22 @@ public class EmployeeController {
         return employeesvc.getAllEmployee(userId);
     }
 
+    @GetMapping("/users/{userid}/employees/expired")
+    public List<Employee> getByFetDate(@PathVariable (value = "userid") Long userId) {
+        if(!users.existsById(userId)){
+            throw new UserNotFoundException(userId);
+        }
+        return employeesvc.findbyExpireFetDate(userId);
+    }
+
+    @GetMapping("/users/{userid}/employees/today")
+    public List<Employee> listTodayTests(@PathVariable (value = "userid") Long userId) {
+        if(!users.existsById(userId)){
+            throw new UserNotFoundException(userId);
+        }
+        return employeesvc.listTodayTests(userId);
+    }
+
     @GetMapping("/users/{userid}/employees/{employeeId}")
     public Employee getEmployeeByEmployeeIdAndUserId(@PathVariable (value = "userId") Long userId,@PathVariable (value = "employeeId") Long employeeId){
         if(!users.existsById(userId)){
@@ -46,6 +65,8 @@ public class EmployeeController {
         }
         return employeesvc.getEmployeeByEmployeeIdAndUserId( employeeId,userId);
     }
+
+    
 
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:3000")

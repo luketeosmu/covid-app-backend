@@ -108,7 +108,7 @@ POST http://localhost:8080/users/1/employees
 Content-Type: application/json
 
 {
-    "id":2,
+    "id":3,
     "name" : "john",
     "vaxStatus": true,
     "fetDate" : "2021/09/05"
@@ -127,5 +127,12 @@ Content-Type: application/json
 
     "name" : "john luke",
     "vaxStatus": true,
-    "fetDate" : "2021/08/18"
+    "fetDate" : "2021/11/7"
 }
+
+###
+
+GET http://localhost:8080/users/1/employees/expired 
+
+###
+GET http://localhost:8080/users/1/employees/today
