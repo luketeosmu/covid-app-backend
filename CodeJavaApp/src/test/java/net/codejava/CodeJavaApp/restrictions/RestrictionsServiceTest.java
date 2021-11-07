@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.times;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,17 @@ public class RestrictionsServiceTest {
     private RestrictionsServiceImpl restrictionsService;
 
     @Test
+    public void getRestriction_Success() {
+        Restrictions restriction = new Restrictions("Indoor", "Category", "2 pax");
+        when(restrictions.save(any(Restrictions.class))).thenReturn(restriction);
+        when(restrictions.findById(restriction.getId())).thenReturn(Optional.of(restriction));
+        Restrictions savedRestriction = restrictionsService.addRestrictions(restriction);
+        Restrictions getRestriction = restrictionsService.getRestriction(restriction.getId());
+        assertNotNull(getRestriction);
+        verify(restrictions).save(restriction);
+    }
+
+    @Test
     public void addRestriction_NewDescription_ReturnSavedRestriction(){
         // arrange ***
         Restrictions restriction = new Restrictions("Indoor", "Category", "Only 5 pax allowed for social gatherings");
@@ -44,31 +57,34 @@ public class RestrictionsServiceTest {
         verify(restrictions).save(restriction);
     }
 
-    // @Test   //problem possibly
-    // public void updateRestriction(){
-    //     Restrictions restriction = new Restrictions("Indoor", "Category", "Only 5 pax allowed for social gatherings");
-    //     Long restrictionId = 1L;
-    //     Restrictions newRestriction = new Restrictions(2L,"outdoor", "Category2" , " 2 pax");
-    //     restrictionsService.addRestrictions(restriction);
-
-    //     when(restrictions.findById(anyLong())).thenReturn(Optional.of(restriction));
-    //     when(restrictionsService.updateRestrictions(restrictionId,any(Restrictions.class))).thenReturn(restriction);
-    //     Restrictions updatedRestriction = restrictionsService.updateRestrictions(restrictionId, newRestriction);
-
-    //     assertNotNull(updatedRestriction);
-    //     // verify(books).save(book);
-    //     verify(restrictionsService).updateRestrictions(restrictionId, newRestriction);
-    // }
+    @Test
+    public void updateRestriction_NewDescription_ReturnUpdatedRestriction(){
+        Restrictions restriction = new Restrictions("Indoor", "Category", "Only 5 pax allowed for social gatherings");
+        String newDescription = "2 pax";
+        //mock
+        when(restrictions.save(any(Restrictions.class))).thenReturn(restriction);
+        when(restrictions.findById(restriction.getId())).thenReturn(Optional.of(restriction));
+        //act
+        Restrictions savedRestriction = restrictionsService.addRestrictions(restriction);
+        Restrictions savedNewRestriction = restrictionsService.updateRestrictions(savedRestriction.getId(), restriction);
+        //assert
+        assertNotNull(savedNewRestriction);
+        verify(restrictions, times(2)).save(restriction);
+        verify(restrictions).findById(savedRestriction.getId());
+    }
 
     @Test
     public void updateRestriction_NotFound_ReturnNull(){
-        Restrictions restriction = new Restrictions("Indoor", "Category", "Only 5 pax allowed for social gatherings");
-        Long restrictionId = 1L;
-        when(restrictions.findById(restrictionId)).thenReturn(Optional.empty());
+        //mock
+//        String description = "2 pax";
+        Restrictions newRestriction = new Restrictions("Indoor", "Category", "newDesciption");
+        when(restrictions.findById(10L)).thenReturn(Optional.empty());
 
-        Restrictions updatedRestriction = restrictionsService.updateRestrictions(restrictionId, restriction);
-
+        //act
+        Restrictions updatedRestriction = restrictionsService.updateRestrictions(10L, newRestriction);
+        //assert
         assertNull(updatedRestriction);
+        verify(restrictions).findById(10L);
     }
 
 }
