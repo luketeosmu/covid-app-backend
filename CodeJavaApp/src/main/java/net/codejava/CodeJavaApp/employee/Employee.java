@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.*;
-import net.codejava.CodeJavaApp.Business.*;
+import net.codejava.CodeJavaApp.user.*;
 
 @Getter
 @Setter
@@ -33,8 +33,8 @@ public class Employee {
     private Date fetDate;
 
     @ManyToOne
-    @JoinColumn(name = "business_id", nullable = false)
-    private Business business;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Employee(Long id , String name, boolean vaxStatus) {
         this.id = id;

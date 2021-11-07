@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import net.codejava.CodeJavaApp.employee.Employee;
+
 import net.codejava.CodeJavaApp.user.*;
 
 @Entity
@@ -31,9 +31,9 @@ public class Business {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "business",cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Employee> employees;
+    // @OneToMany(mappedBy = "business",cascade = CascadeType.ALL, orphanRemoval = true)
+    // @JsonIgnore
+    // private List<Employee> employees;
 
 
     public Business(String businessName, String category, Character outdoorIndoor, Long capacity) {

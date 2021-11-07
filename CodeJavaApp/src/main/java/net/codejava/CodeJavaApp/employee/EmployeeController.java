@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.codejava.CodeJavaApp.Business.*;
+import net.codejava.CodeJavaApp.user.*;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,40 +29,40 @@ public class EmployeeController {
     private EmployeeServiceImpl employeesvc;
 
     @Autowired
-    private BusinessRepository businesses;
+    private UserRepository users;
 
-    @GetMapping("/users/{userid}/businesses/{businessId}/employees")
-    public List<Employee> getEmployeesByBusinessId(@PathVariable (value = "businessId") Long businessId){
-        if(!businesses.existsById(businessId)){
-            throw new BusinessNotFoundException(businessId);
+    @GetMapping("/users/{userid}/employees")
+    public List<Employee> getEmployeesByUserId(@PathVariable (value = "userid") Long userId){
+        if(!users.existsById(userId)){
+            throw new UserNotFoundException(userId);
         }
-        return employeesvc.getAllEmployee(businessId);
+        return employeesvc.getAllEmployee(userId);
     }
 
-    @GetMapping("/users/{userid}/businesses/{businessid}/employees/{employeeId}")
-    public Employee getEmployeeBybusinessId(@PathVariable (value = "businessId") Long userId,@PathVariable (value = "businessId") Long businessId, @PathVariable (value = "employeeId") Long employeeId){
-        if(!businesses.existsById(businessId)){
-            throw new BusinessNotFoundException(businessId);
+    @GetMapping("/users/{userid}/employees/{employeeId}")
+    public Employee getEmployeeByEmployeeIdAndUserId(@PathVariable (value = "userId") Long userId,@PathVariable (value = "employeeId") Long employeeId){
+        if(!users.existsById(userId)){
+            throw new UserNotFoundException(userId);
         }
-        return employeesvc.getEmployeeByEmployeeIdAndBusinessId( employeeId,businessId);
+        return employeesvc.getEmployeeByEmployeeIdAndUserId( employeeId,userId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/users/{userid}/businesses/{businessId}/employees")
-    public Employee addEmployee(@PathVariable (value = "businessId") Long businessId,@RequestBody @Valid Employee employee){
-        return employeesvc.addEmployee(businessId, employee);
+    @PostMapping("/users/{userid}/employees")
+    public Employee addEmployee(@PathVariable (value = "userid") Long userId,@RequestBody @Valid Employee employee){
+        return employeesvc.addEmployee(userId, employee);
     }
 
-    @PutMapping("/users/{userid}/businesses/{businessId}/employees/{employeeId}")
-    public Employee updateEmployee(@PathVariable (value = "businessId") Long businessId ,
+    @PutMapping("/users/{userid}/employees/{employeeId}")
+    public Employee updateEmployee(@PathVariable (value = "userid") Long userId ,
             @PathVariable (value = "employeeId") Long employeeId, @RequestBody Employee newEmployee) {
-        return employeesvc.updateEmployee(businessId,employeeId ,newEmployee);
+        return employeesvc.updateEmployee(userId,employeeId ,newEmployee);
     }
 
-    @DeleteMapping("/users/{userid}/businesses/{businessId}/employees/{employeeId}")
-    public ResponseEntity<?> deleteEmployee(@PathVariable Long businessId,@PathVariable Long employeeId ){
-        return employeesvc.deleteEmployee(businessId, employeeId);
+    @DeleteMapping("/users/{userid}/employees/{employeeId}")
+    public ResponseEntity<?> deleteEmployee(@PathVariable Long userid,@PathVariable Long employeeId ){
+        return employeesvc.deleteEmployee(userid, employeeId);
     }
 
 

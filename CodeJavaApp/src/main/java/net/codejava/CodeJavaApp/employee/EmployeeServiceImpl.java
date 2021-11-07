@@ -8,52 +8,53 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import net.codejava.CodeJavaApp.Business.*;
+import net.codejava.CodeJavaApp.user.*;
 
 import org.springframework.http.ResponseEntity;
 
 @Service
 public class EmployeeServiceImpl {
     @Autowired
-    private BusinessRepository businesses;
+    private UserRepository users;
 
     @Autowired
     private EmployeeRepository employees;
 
-    public List<Employee> getAllEmployee(Long businessId){
-        return employees.findByBusinessBusinessId(businessId);
+    public List<Employee> getAllEmployee(Long userId){
+        return employees.findByUserId(userId);
     }
 
-    public Employee getEmployeeByEmployeeIdAndBusinessId(Long employeeId, Long  businessId){
-        return employees.findByIdAndBusinessBusinessId(employeeId, businessId).map(employee2 ->{
+    public Employee getEmployeeByEmployeeIdAndUserId(Long employeeId, Long userId){
+        return employees.findByIdAndUserId(employeeId, userId).map(employee2 ->{
             return employee2;
         }).orElseThrow(()-> new EmployeeNotFoundException(employeeId));
     }
 
     
-    public Employee addEmployee(Long businessId, Employee employee){
-        return businesses.findById(businessId).map(business2-> {
-            //if user exist then set user and check for duplicated business name 
-            employee.setBusiness(business2);
+    public Employee addEmployee(Long userId, Employee employee){
+        return users.findById(userId).map(user2-> {
+            //if user exist then set user and check for duplicated user name 
+            employee.setUser(user2);
             Employee check = employees.findById(employee.getId()).map(employee2 ->{
                 return employee2;
             }).orElse(null);
+
             if(check != null){
-                throw new EmployeeExistsException(employee.getName()); 
+                throw new EmployeeExistsException(employee.getId()); 
             }else{
                 return employees.save(employee);
             }
-        }).orElseThrow(()-> new BusinessNotFoundException(businessId));
+        }).orElseThrow(()-> new UserNotFoundException(userId));
 
 
     }
 
 
-    public Employee updateEmployee(Long businessId, Long employeeId, Employee newEmployee){
-        if(!businesses.existsById(businessId)){
-            throw new BusinessNotFoundException(businessId);
+    public Employee updateEmployee(Long userId, Long employeeId, Employee newEmployee){
+        if(!users.existsById(userId)){
+            throw new UserNotFoundException(userId);
         }
-        return employees.findByIdAndBusinessBusinessId(employeeId, businessId).map(employee2 ->{
+        return employees.findByIdAndUserId(employeeId, userId).map(employee2 ->{
             employee2.setName(newEmployee.getName());
             employee2.setVaxStatus(newEmployee.isVaxStatus());
             employee2.setFetDate(newEmployee.getFetDate());
@@ -62,11 +63,11 @@ public class EmployeeServiceImpl {
 
     }
 
-    public ResponseEntity<?> deleteEmployee(Long businessId, Long employeeId){
-        if(!businesses.existsById(businessId)){
-            throw new BusinessNotFoundException(businessId);
+    public ResponseEntity<?> deleteEmployee(Long userId, Long employeeId){
+        if(!users.existsById(userId)){
+            throw new UserNotFoundException(userId);
         }
-        return employees.findByIdAndBusinessBusinessId(employeeId,businessId).map(employee2 ->{
+        return employees.findByIdAndUserId(employeeId,userId).map(employee2 ->{
             employees.delete(employee2);
             return ResponseEntity.ok().build();
         }).orElseThrow(()-> new EmployeeNotFoundException(employeeId));

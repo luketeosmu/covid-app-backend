@@ -9,5 +9,8 @@ public class EmployeeExistsException extends RuntimeException{
     public EmployeeExistsException(String employeeName) {
         super("This employee is already registered: " + employeeName);
     }
+    public EmployeeExistsException(Long id) {
+        super("This employee is already registered: id = " + id);
+    }
     
 }

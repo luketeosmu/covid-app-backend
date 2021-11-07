@@ -16,6 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import net.codejava.CodeJavaApp.Business.*;
+import net.codejava.CodeJavaApp.employee.Employee;
 
 import lombok.*;
 
@@ -56,6 +57,10 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Business> businesses;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Employee> employees;
 
     public User(String username,String password,String firstName,String lastName,String authorities) {
         this.username = username;
