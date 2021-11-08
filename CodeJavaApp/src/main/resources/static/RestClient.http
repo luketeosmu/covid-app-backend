@@ -64,7 +64,7 @@ Authorization: Basic hihi@gmail.com:Tester123
 
 ### get all users
 GET http://localhost:8080/users
-Authorization: Basic hihi@gmail.com:Tester123
+# Authorization: Basic hihi@gmail.com:Tester123
 
 
 ### get specific users
@@ -93,15 +93,31 @@ Access-Control-Allow-Origin: *
 ###
 PUT http://localhost:8080/users/2
 Content-Type: application/json
+Authorization: Basic hihi4@gmail.com:Tester123
 
 {
-    "username":"hihi@gmail.com",
+    "username":"dummy@gmail.com",
     "password": "Testing12345",
     "firstName": "firstname",
     "lastName": "lasterName",
     "authorities":"",
     "fetConfig;": 7
 }
+
+###
+PUT http://localhost:8080/users/2/changePassword
+Content-Type: application/json
+Authorization: Basic hihi4@gmail.com:Testing12345
+
+{
+    "username":"dummy@gmail.com",
+    "password": "BODOH123",
+    "firstName": "firstname",
+    "lastName": "lasterName",
+    "authorities":"",
+    "fetConfig;": 7
+}
+
 
 ###
 DELETE http://localhost:8080/users/2

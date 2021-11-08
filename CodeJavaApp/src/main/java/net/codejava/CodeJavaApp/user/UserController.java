@@ -60,6 +60,14 @@ public class UserController {
        
     }
 
+    @PutMapping("/users/{userId}/changePassword")
+    public User updateUserPassword(
+                                 @PathVariable (value = "userId") Long userId,
+                                 @Valid @RequestBody User newUser) {
+        return users.updateUserPassword(userId, newUser);
+       
+    }
+
 
     /**
      * if there's no user to be deleted the exception will be caught 
