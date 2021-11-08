@@ -72,37 +72,37 @@ public class UserServiceTest {
         verify(users).findByUsername(user.getUsername());
     }
 
-    @Test
-    void updateUser_NotFound_ReturnUserNotFoundException(){
-        User updatedUser = null;
-        try {
-            User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
-            Long userID = 10L;
-            when(users.findById(userID)).thenReturn(Optional.of(user));
-            updatedUser = userService.updateUser(userID, user);
-        } catch(UserNotFoundException e) {
-            assertNull(updatedUser);
-            verify(users).findById(10L);
-        }
-    }
+    // @Test
+    // void updateUser_NotFound_ReturnUserNotFoundException(){
+    //     User updatedUser = null;
+    //     try {
+    //         User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
+    //         Long userID = 10L;
+    //         when(users.findById(userID)).thenReturn(Optional.of(user));
+    //         updatedUser = userService.updateUser(userID, user);
+    //     } catch(UserNotFoundException e) {
+    //         assertNull(updatedUser);
+    //         verify(users).findById(10L);
+    //     }
+    // }
 
-    @Test
-    void updateUser_Success() {
-        //arrange
-        User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
-        User updatedUser = new User("test@gmail.com", "Test123", "NewName", "tes", "ROLE_ADMIN");
-        when(users.save(any(User.class))).thenReturn(user);
-        when(users.findById(user.getId())).thenReturn(Optional.of(user));
+    // @Test
+    // void updateUser_Success() {
+    //     //arrange
+    //     User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
+    //     User updatedUser = new User("test@gmail.com", "Test123", "NewName", "tes", "ROLE_ADMIN");
+    //     when(users.save(any(User.class))).thenReturn(user);
+    //     when(users.findById(user.getId())).thenReturn(Optional.of(user));
 
-        //act
-        userService.addUser(user);
-        User newUser = userService.updateUser(user.getId(), updatedUser);
+    //     //act
+    //     userService.addUser(user);
+    //     User newUser = userService.updateUser(user.getId(), updatedUser);
 
-        //assert
-        assertNotNull(newUser);
-        verify(users, times(2)).save(user);
-        verify(users).findById(user.getId());
-    }
+    //     //assert
+    //     assertNotNull(newUser);
+    //     verify(users, times(2)).save(user);
+    //     verify(users).findById(user.getId());
+    // }
 
     @Test
     void deleteUser_Success() {

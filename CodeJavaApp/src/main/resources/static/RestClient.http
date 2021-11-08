@@ -95,7 +95,7 @@ PUT http://localhost:8080/users/2
 Content-Type: application/json
 
 {
-    "username":"dummyvalue@gmail.com",
+    "username":"hihi@gmail.com",
     "password": "Testing12345",
     "firstName": "firstname",
     "lastName": "lasterName",
@@ -128,7 +128,6 @@ PUT http://localhost:8080/users/1/employees/1
 Content-Type: application/json
 
 {
-
     "name" : "john luke",
     "vaxStatus": true,
     "fetDate" : "2021/11/7"
