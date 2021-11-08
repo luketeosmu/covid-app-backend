@@ -38,17 +38,17 @@ public class UserIntegrationTest {
         users.deleteAll();
     }
 
-    // @Test
-    // public void getUsers_Success() throws Exception {
-    //     URI uri = new URI(baseUrl + port + "/users");
-    //     users.save(new User("hihi4@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN"));
-    //     ResponseEntity<User[]> result = restTemplate.withBasicAuth("email", "password")
-    //                                     .getForEntity(uri, User[].class);
-    //     User[] users = result.getBody();
+     @Test
+     public void getUsers_Success() throws Exception {
+         URI uri = new URI(baseUrl + port + "/users");
+         users.save(new User("hihi4@gmail.com", encoder.encode("Tester123"), "john","luke","ROLE_ADMIN"));
+         ResponseEntity<User[]> result = restTemplate.withBasicAuth("email", "password")
+                                         .getForEntity(uri, User[].class);
+         User[] users = result.getBody();
 
-    //     assertEquals(200, result.getStatusCode().value());
-    //     assertEquals(1, users.length);
-    // }
+         assertEquals(200, result.getStatusCode().value());
+         assertEquals(1, users.length);
+     }
     @Test
     public void addUser_Success() throws Exception {
         URI uri = new URI(baseUrl + port + "/users");

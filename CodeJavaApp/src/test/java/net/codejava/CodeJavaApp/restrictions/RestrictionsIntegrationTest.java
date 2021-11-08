@@ -9,15 +9,16 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-
+import static org.hamcrest.Matchers.equalTo;
 import net.codejava.CodeJavaApp.user.*;
-
+import static io.restassured.RestAssured.*;
 import java.awt.print.Book;
 import java.net.URI;
 import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.mockito.BDDMockito.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RestrictionsIntegrationTest {
@@ -33,10 +34,10 @@ class RestrictionsIntegrationTest {
     @Autowired
     private RestrictionsRepository restrictions;
 
-    @Autowired 
+    @Autowired
     private UserRepository users;
 
-    @Autowired 
+    @Autowired
     private BCryptPasswordEncoder encoder;
 
     @AfterEach
@@ -46,7 +47,7 @@ class RestrictionsIntegrationTest {
     }
 
     @Test
-    public void getRestrictions_Success() throws Exception {
+    public void getAllRestrictions_Success() throws Exception {
         URI uri = new URI(baseUrl + port + "/restrictions");
         restrictions.save(new Restrictions("Indoor", "category", "description"));
 
@@ -56,6 +57,17 @@ class RestrictionsIntegrationTest {
         assertEquals(200, result.getStatusCode().value());
         assertEquals(1, restrictions.length);
     }
+
+//    @Test
+//    public void getRestrictions_Success() throws Exception {
+//        URI uri = new URI(baseUrl + port + "/restrictions");
+//        restrictions.save(new Restrictions("Indoor", "category", "description"));
+//
+//        given().get(uri).
+//                then().
+//                statusCode(200).
+//                body("size()", equalTo(1));
+//    }
 
     @Test
     public void getRestriction_ValidRestrictionId_Success() throws Exception {
@@ -86,7 +98,7 @@ class RestrictionsIntegrationTest {
         users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
 
         ResponseEntity<Restrictions> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
-        .postForEntity(uri, restriction, Restrictions.class);
+                .postForEntity(uri, restriction, Restrictions.class);
 
         assertEquals(201, result.getStatusCode().value());
         assertEquals(restriction.getDescription(), result.getBody().getDescription());
@@ -98,7 +110,7 @@ class RestrictionsIntegrationTest {
         URI uri = new URI(baseUrl + port + "/restrictions/" + restriction.getId().longValue());
         users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
         ResponseEntity<Void> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
-                                    .exchange(uri, HttpMethod.DELETE, null, Void.class);
+                .exchange(uri, HttpMethod.DELETE, null, Void.class);
         assertEquals(200, result.getStatusCode().value());
         Optional<Restrictions> emptyValue = Optional.empty();
         assertEquals(emptyValue, restrictions.findById(restriction.getId()));
@@ -109,7 +121,7 @@ class RestrictionsIntegrationTest {
         URI uri = new URI(baseUrl + port + "/restrictions/1");
         users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
         ResponseEntity<Void> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
-										.exchange(uri, HttpMethod.DELETE, null, Void.class);
+                .exchange(uri, HttpMethod.DELETE, null, Void.class);
         assertEquals(404, result.getStatusCode().value());
     }
 
@@ -120,7 +132,7 @@ class RestrictionsIntegrationTest {
         users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
         Restrictions newRestrictionInfo = new Restrictions("Indoor", "category", "new description");
         ResponseEntity<Restrictions> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
-        .exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
+                .exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
 
         assertEquals(200, result.getStatusCode().value());
         assertEquals(newRestrictionInfo.getDescription(), result.getBody().getDescription());
@@ -132,7 +144,7 @@ class RestrictionsIntegrationTest {
         Restrictions newRestrictionInfo = new Restrictions("Indoor", "category", "description");
         users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
         ResponseEntity<Restrictions> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
-        .exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
+                .exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
         assertEquals(404, result.getStatusCode().value());
     }
 }
