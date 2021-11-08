@@ -65,13 +65,19 @@ public class UserService {
      */
     public User updateUser(Long userId, User newUser) {
         return users.findById(userId).map(user -> {
-            User findUser = users.findByUsername(newUser.getUsername()).orElse(null);
-            if(findUser != null){
-                throw new UsernameExistsException(newUser.getUsername());
+            if(!newUser.getUsername().equals("dummy@gmail.com")){
+                User findUser = users.findByUsername(newUser.getUsername()).orElse(null);
+                if(findUser != null){
+                    throw new UsernameExistsException(newUser.getUsername());
+                }
+                user.setUsername(newUser.getUsername());
             }
-            user.setPassword(encoder.encode(newUser.getPassword()));
-            user.setFirstName(newUser.getFirstName());
-            user.setLastName(newUser.getLastName());
+            else{
+
+                user.setPassword(encoder.encode(newUser.getPassword()));
+                user.setFirstName(newUser.getFirstName());
+                user.setLastName(newUser.getLastName());
+            }
             return users.save(user);
         }).orElseThrow(() -> new UserNotFoundException(userId));
     }
