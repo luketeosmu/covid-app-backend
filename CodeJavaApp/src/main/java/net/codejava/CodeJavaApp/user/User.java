@@ -55,6 +55,8 @@ public class User implements UserDetails{
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
     private String authorities;  
 
+    private int fetConfig;
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Business> businesses;
@@ -62,6 +64,9 @@ public class User implements UserDetails{
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Employee> employees;
+
+    
+
 
     public User(String username,String password,String firstName,String lastName,String authorities) {
         this.username = username;

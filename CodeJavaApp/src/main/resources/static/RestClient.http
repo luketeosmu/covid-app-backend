@@ -99,7 +99,8 @@ Content-Type: application/json
     "password": "Testing12345",
     "firstName": "firstname",
     "lastName": "lasterName",
-    "authorities":""
+    "authorities":"",
+    "fetConfig;": 7
 }
 
 ###
