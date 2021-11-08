@@ -40,6 +40,7 @@ public class UserService {
             return null;
         }
     }
+    
     /**
      * This is a special post method for axios to call for the user 
      * The body will consist of the username and password 
