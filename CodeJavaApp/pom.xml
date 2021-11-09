@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>net.codejava</groupId>
 	<artifactId>codejavaapp</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.5-SNAPSHOT</version>
 	<name>CodeJavaApp</name>
 	<description>Demo user registration and login</description>
 
