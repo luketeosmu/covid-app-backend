@@ -38,11 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and() //  "and()"" method allows us to continue configuring the parent
         .authorizeRequests()
             //authorization for business
-            .antMatchers(HttpMethod.GET, "/users/*/businesses/*").hasAnyRole("ADMIN", "USER")
-            .antMatchers(HttpMethod.GET, "/users/*/businesses").hasRole("ADMIN")
-            .antMatchers(HttpMethod.POST, "/users/*/businesses").hasAnyRole("ADMIN", "USER")
-            .antMatchers(HttpMethod.PUT, "/users/*/businesses/*").hasAnyRole("ADMIN", "USER")
-            .antMatchers(HttpMethod.DELETE, "/users/*/businesses/*").hasAnyRole("ADMIN", "USER")
+            .antMatchers(HttpMethod.GET, "/users/*/businesses/*").permitAll()
+            .antMatchers(HttpMethod.GET, "/users/*/businesses").permitAll()
+            .antMatchers(HttpMethod.POST, "/users/*/businesses").permitAll()
+            .antMatchers(HttpMethod.PUT, "/users/*/businesses/*").permitAll()
+            .antMatchers(HttpMethod.DELETE, "/users/*/businesses/*").permitAll()
             //authorization for restrictions
             .antMatchers(HttpMethod.GET, "/restrictions").hasAnyRole("ADMIN", "USER")
             .antMatchers(HttpMethod.POST, "/restrictions").hasRole("ADMIN")

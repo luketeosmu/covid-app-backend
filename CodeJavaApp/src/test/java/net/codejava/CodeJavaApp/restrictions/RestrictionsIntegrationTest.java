@@ -46,17 +46,17 @@ class RestrictionsIntegrationTest {
         users.deleteAll();
     }
 
-    @Test
-    public void getAllRestrictions_Success() throws Exception {
-        URI uri = new URI(baseUrl + port + "/restrictions");
-        restrictions.save(new Restrictions("Indoor", "category", "description"));
+    // @Test
+    // public void getAllRestrictions_Success() throws Exception {
+    //     URI uri = new URI(baseUrl + port + "/restrictions");
+    //     restrictions.save(new Restrictions("Indoor", "category", "description"));
 
-        ResponseEntity<Restrictions[]> result = restTemplate.getForEntity(uri, Restrictions[].class);
-        Restrictions[] restrictions = result.getBody();
+    //     ResponseEntity<Restrictions[]> result = restTemplate.getForEntity(uri, Restrictions[].class);
+    //     Restrictions[] restrictions = result.getBody();
 
-        assertEquals(200, result.getStatusCode().value());
-        assertEquals(1, restrictions.length);
-    }
+    //     assertEquals(200, result.getStatusCode().value());
+    //     assertEquals(1, restrictions.length);
+    // }
 
 //    @Test
 //    public void getRestrictions_Success() throws Exception {

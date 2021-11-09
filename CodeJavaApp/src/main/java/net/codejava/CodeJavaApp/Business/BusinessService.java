@@ -75,6 +75,8 @@ public class BusinessService {
         return businessRepository.findByBusinessIdAndUserId(businessId,userId).map(business2 ->{
             business2.setCategory(newBusiness.getCategory());
             business2.setOutdoorIndoor(newBusiness.getOutdoorIndoor());
+            business2.setCapacity(newBusiness.getCapacity());
+            business2.setBusinessName(newBusiness.getBusinessName());
             return businessRepository.save(business2);
         }).orElseThrow(()->new BusinessNotFoundException(businessId));
 

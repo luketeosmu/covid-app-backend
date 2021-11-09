@@ -33,15 +33,15 @@ DELETE http://localhost:8080/restrictions/2
 
 ###
 GET http://localhost:8080/users/1/businesses
-Authorization: Basic hihi@gmail.com:Tester123
+Authorization: Basic hihi4@gmail.com:Tester123
 
 ###
 POST http://localhost:8080/users/1/businesses
 Content-Type: application/json
-Authorization: Basic hihi@gmail.com:Tester123
+Authorization: Basic hihi4@gmail.com:Tester123
 
 {
-    "businessName":"turks kebabss",
+    "businessName":"turks kebabab",
     "category":"better than pasta express",
     "outdoorIndoor":"o",
     "capacity":"1000"
@@ -64,7 +64,7 @@ Authorization: Basic hihi@gmail.com:Tester123
 
 ### get all users
 GET http://localhost:8080/users
-# Authorization: Basic hihi@gmail.com:Tester123
+Authorization: Basic hihi@gmail.com:Tester123
 
 
 ### get specific users
@@ -79,15 +79,14 @@ Content-Type: application/json
 ###
 POST http://localhost:8080/users
 Content-Type: application/json
-Access-Control-Allow-Origin: *
 # Authorization: Basic hihi@gmail.com:Tester123
 
 {
-        "username":"hihi8@gmail.com",
+        "username":"hihi@gmail.com",
         "password": "Tester123",
         "firstName":"firstName",
         "lastName": "lastName",
-        "authorities": "ROLE_USER"
+        "authorities": "ROLE_ADMIN"
 }
 
 ###
@@ -96,7 +95,7 @@ Content-Type: application/json
 Authorization: Basic hihi4@gmail.com:Tester123
 
 {
-    "username":"dummy@gmail.com",
+    "username":"hihi5@gmail.com",
     "password": "Testing12345",
     "firstName": "firstname",
     "lastName": "lasterName",

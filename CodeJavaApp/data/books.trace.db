@@ -1,0 +1,42 @@
+2021-11-09 12:05:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+insert into user (id, authorities, fet_config, first_name, last_name, password, username) values (null, ?, ?, ?, ?, ?, ?) [42102-200]
+2021-11-09 12:05:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+select restrictio0_.id as id1_2_, restrictio0_.category as category2_2_, restrictio0_.description as descript3_2_, restrictio0_.location_setting as location4_2_ from restrictions restrictio0_ [42102-200]
+2021-11-09 12:05:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+insert into restrictions (id, category, description, location_setting) values (null, ?, ?, ?) [42102-200]
+2021-11-09 12:05:32 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+select restrictio0_.id as id1_2_, restrictio0_.category as category2_2_, restrictio0_.description as descript3_2_, restrictio0_.location_setting as location4_2_ from restrictions restrictio0_ [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+insert into user (id, authorities, fet_config, first_name, last_name, password, username) values (null, ?, ?, ?, ?, ?, ?) [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+select restrictio0_.id as id1_2_, restrictio0_.category as category2_2_, restrictio0_.description as descript3_2_, restrictio0_.location_setting as location4_2_ from restrictions restrictio0_ [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+select restrictio0_.id as id1_2_0_, restrictio0_.category as category2_2_0_, restrictio0_.description as descript3_2_0_, restrictio0_.location_setting as location4_2_0_ from restrictions restrictio0_ where restrictio0_.id=? [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+select restrictio0_.id as id1_2_, restrictio0_.category as category2_2_, restrictio0_.description as descript3_2_, restrictio0_.location_setting as location4_2_ from restrictions restrictio0_ [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+insert into restrictions (id, category, description, location_setting) values (null, ?, ?, ?) [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+select restrictio0_.id as id1_2_, restrictio0_.category as category2_2_, restrictio0_.description as descript3_2_, restrictio0_.location_setting as location4_2_ from restrictions restrictio0_ [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+insert into user (id, authorities, fet_config, first_name, last_name, password, username) values (null, ?, ?, ?, ?, ?, ?) [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+select restrictio0_.id as id1_2_, restrictio0_.category as category2_2_, restrictio0_.description as descript3_2_, restrictio0_.location_setting as location4_2_ from restrictions restrictio0_ [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+insert into restrictions (id, category, description, location_setting) values (null, ?, ?, ?) [42102-200]
+2021-11-09 12:05:33 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "RESTRICTIONS" not found; SQL statement:
+select restrictio0_.id as id1_2_, restrictio0_.category as category2_2_, restrictio0_.description as descript3_2_, restrictio0_.location_setting as location4_2_ from restrictions restrictio0_ [42102-200]
