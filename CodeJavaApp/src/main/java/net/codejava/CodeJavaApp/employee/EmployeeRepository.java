@@ -10,7 +10,7 @@ import java.util.*;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     
-    @Query(value = "select * from employee where (date(fet_date) - date(CURRENT_TIMESTAMP))<0 and user_id = ?1", nativeQuery = true)
+    @Query(value = "select * from employee where (date(fet_date) - date(CURRENT_TIMESTAMP))<=0 and user_id = ?1", nativeQuery = true)
     List<Employee> listExpiredTestEmployees(Long userid); 
     
     @Query(value = "select* from employee where date(fet_date) = current_date() and user_id =?1", nativeQuery = true)
