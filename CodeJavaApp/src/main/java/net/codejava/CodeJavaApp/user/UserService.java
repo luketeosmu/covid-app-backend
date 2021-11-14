@@ -75,8 +75,6 @@ public class UserService {
                 }
                 user.setUsername(newUser.getUsername());
             } else {
-
-                // user.setPassword(encoder.encode(newUser.getPassword()));
                 user.setFirstName(newUser.getFirstName());
                 user.setLastName(newUser.getLastName());
                 user.setFetConfig(newUser.getFetConfig());

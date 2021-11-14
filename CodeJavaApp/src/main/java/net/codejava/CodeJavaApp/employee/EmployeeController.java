@@ -47,23 +47,28 @@ public class EmployeeController {
         if(!users.existsById(userId)){
             throw new UserNotFoundException(userId);
         }
-        return employeesvc.findbyExpireFetDate(userId);
+        return employeesvc.getExpiredFetEmployees(userId);
     }
 
-    @GetMapping("/users/{userid}/employees/today")
-    public List<Employee> listTodayTests(@PathVariable (value = "userid") Long userId) {
-        if(!users.existsById(userId)){
-            throw new UserNotFoundException(userId);
-        }
-        return employeesvc.listTodayTests(userId);
-    }
+    // @GetMapping("/users/{userid}/employees/today")
+    // public List<Employee> listTodayTests(@PathVariable (value = "userid") Long userId) {
+    //     if(!users.existsById(userId)){
+    //         throw new UserNotFoundException(userId);
+    //     }
+    //     return employeesvc.listTodayTests(userId);
+    // }
 
     @GetMapping("/users/{userid}/employees/{employeeId}")
-    public Employee getEmployeeByEmployeeIdAndUserId(@PathVariable (value = "userId") Long userId,@PathVariable (value = "employeeId") Long employeeId){
+    public Employee getEmployeeByEmployeeIdAndUserId(@PathVariable (value = "userid") Long userId,
+                                                    @PathVariable (value = "employeeId") Long employeeId){
         if(!users.existsById(userId)){
             throw new UserNotFoundException(userId);
         }
-        return employeesvc.getEmployeeByEmployeeIdAndUserId( employeeId,userId);
+        Employee employee = employeesvc.getEmployeeByEmployeeIdAndUserId( employeeId , userId);
+        if(employee == null){
+            throw new EmployeeNotFoundException(employeeId);
+        }
+        return employee;
     }
 
     
@@ -72,17 +77,34 @@ public class EmployeeController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/users/{userid}/employees")
     public Employee addEmployee(@PathVariable (value = "userid") Long userId,@RequestBody @Valid Employee employee){
-        return employeesvc.addEmployee(userId, employee);
+        if(!users.existsById(userId)){
+            throw new UserNotFoundException(userId);
+        }
+        Employee employee2 = employeesvc.addEmployee(userId, employee);
+        if(employee2 == null ){
+            throw new EmployeeExistsException(employee.getId());
+        }
+        return employee2;
     }
 
     @PutMapping("/users/{userid}/employees/{employeeId}")
     public Employee updateEmployee(@PathVariable (value = "userid") Long userId ,
             @PathVariable (value = "employeeId") Long employeeId, @RequestBody Employee newEmployee) {
-        return employeesvc.updateEmployee(userId,employeeId ,newEmployee);
+        if(!users.existsById(userId)){
+            throw new UserNotFoundException(userId); 
+        }
+        Employee employee = employeesvc.updateEmployee(userId,employeeId ,newEmployee);
+        if(employee == null ){
+            throw new EmployeeNotFoundException(employeeId);
+        }
+        return employee;
     }
 
     @DeleteMapping("/users/{userid}/employees/{employeeId}")
     public ResponseEntity<?> deleteEmployee(@PathVariable Long userid,@PathVariable Long employeeId ){
+        if(!users.existsById(userid)){
+            throw new UserNotFoundException(userid);
+        }
         return employeesvc.deleteEmployee(userid, employeeId);
     }
 

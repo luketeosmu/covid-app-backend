@@ -2,6 +2,7 @@ package net.codejava.CodeJavaApp.Business;
 
 import java.util.*;
 
+import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import net.codejava.CodeJavaApp.user.*;
 import net.codejava.CodeJavaApp.user.UserNotFoundException;
+import net.codejava.CodeJavaApp.user.*;
 
 @Service
 public class BusinessService {
@@ -20,9 +22,16 @@ public class BusinessService {
 
     @Autowired
     private UserRepository users;
-//    private List<Business> businesses = new ArrayList<>();
+    /**
+     * to get a list of user's businesses 
+     * @param userId
+     * @return List of businesses under this userId
+     */
 
     public List<Business> getAllBusinesses(Long userId){
+        if(users.findById(userId) == null){
+            return null; 
+        }
         return businessRepository.findByUserId(userId);
     }
 
@@ -30,12 +39,12 @@ public class BusinessService {
      * to find the specific users/num/businesses/num 
      * @param businessId
      * @param userId
-     * @return
+     * @return business or throw BusinessNotFoundException
      */
     public Business getBusinessByBusinessIdAndUserId(Long businessId, Long userId){
         return businessRepository.findByBusinessIdAndUserId(businessId,userId).map(business2 ->{
             return business2;
-        }).orElseThrow(()-> new BusinessNotFoundException(businessId));
+        }).orElse(null);
     }
 
     /**
@@ -44,6 +53,7 @@ public class BusinessService {
      * @param business
      * @return saved business/ null 
      */
+    
     public Business addBusiness(Long userId, Business business){
         return users.findById(userId).map(user2-> {
             //if user exist then set user and check for duplicated business name 
@@ -52,11 +62,11 @@ public class BusinessService {
                 return business2;
             }).orElse(null);
             if(check != null){
-                throw new BusinessExistsException(business.getBusinessName()); 
+                return null; 
             }else{
                 return businessRepository.save(business);
             }
-        }).orElseThrow(()-> new UserNotFoundException(userId));
+        }).orElse(null);
 
 
     }
@@ -68,18 +78,20 @@ public class BusinessService {
      * @param newBusiness
      * @return usernotfound / businessnotfound / business that is updated
      */
-    public Business updateBusiness(Long userId, Long businessId, Business newBusiness){
-        if(!users.existsById(userId)){
-            throw new UserNotFoundException(userId);
-        }
-        return businessRepository.findByBusinessIdAndUserId(businessId,userId).map(business2 ->{
-            business2.setCategory(newBusiness.getCategory());
-            business2.setOutdoorIndoor(newBusiness.getOutdoorIndoor());
-            business2.setCapacity(newBusiness.getCapacity());
-            business2.setBusinessName(newBusiness.getBusinessName());
-            return businessRepository.save(business2);
-        }).orElseThrow(()->new BusinessNotFoundException(businessId));
 
+    public Business updateBusiness(Long userId, Long businessId, Business newBusiness){
+        return businessRepository.findByBusinessIdAndUserId(businessId,userId).map(business2 ->{
+            setDetails(newBusiness, business2);
+            return businessRepository.save(business2);
+        }).orElse(null);
+
+    }
+
+    private void setDetails(Business newBusiness, Business business2) {
+        business2.setCategory(newBusiness.getCategory());
+        business2.setOutdoorIndoor(newBusiness.getOutdoorIndoor());
+        business2.setCapacity(newBusiness.getCapacity());
+        business2.setBusinessName(newBusiness.getBusinessName());
     }
 
     public ResponseEntity<?> deleteBusiness(Long userId, Long businessId){

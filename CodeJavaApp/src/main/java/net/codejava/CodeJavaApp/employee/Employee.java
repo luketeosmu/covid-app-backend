@@ -46,8 +46,4 @@ public class Employee {
         this.vaxStatus = vaxStatus;
     } 
 
-
-
-    
-    
 }

@@ -46,29 +46,6 @@ class RestrictionsIntegrationTest {
         users.deleteAll();
     }
 
-    // @Test
-    // public void getAllRestrictions_Success() throws Exception {
-    //     URI uri = new URI(baseUrl + port + "/restrictions");
-    //     restrictions.save(new Restrictions("Indoor", "category", "description"));
-
-    //     ResponseEntity<Restrictions[]> result = restTemplate.getForEntity(uri, Restrictions[].class);
-    //     Restrictions[] restrictions = result.getBody();
-
-    //     assertEquals(200, result.getStatusCode().value());
-    //     assertEquals(1, restrictions.length);
-    // }
-
-//    @Test
-//    public void getRestrictions_Success() throws Exception {
-//        URI uri = new URI(baseUrl + port + "/restrictions");
-//        restrictions.save(new Restrictions("Indoor", "category", "description"));
-//
-//        given().get(uri).
-//                then().
-//                statusCode(200).
-//                body("size()", equalTo(1));
-//    }
-
     @Test
     public void getRestriction_ValidRestrictionId_Success() throws Exception {
         Restrictions restriction = new Restrictions("Indoor", "category", "description");
@@ -147,4 +124,28 @@ class RestrictionsIntegrationTest {
                 .exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
         assertEquals(404, result.getStatusCode().value());
     }
+
+    // @Test
+    // public void getAllRestrictions_Success() throws Exception {
+    //     URI uri = new URI(baseUrl + port + "/restrictions");
+    //     restrictions.save(new Restrictions("Indoor", "category", "description"));
+
+    //     ResponseEntity<Restrictions[]> result = restTemplate.getForEntity(uri, Restrictions[].class);
+    //     Restrictions[] restrictions = result.getBody();
+
+    //     assertEquals(200, result.getStatusCode().value());
+    //     assertEquals(1, restrictions.length);
+    // }
+
+//    @Test
+//    public void getRestrictions_Success() throws Exception {
+//        URI uri = new URI(baseUrl + port + "/restrictions");
+//        restrictions.save(new Restrictions("Indoor", "category", "description"));
+//
+//        given().get(uri).
+//                then().
+//                statusCode(200).
+//                body("size()", equalTo(1));
+//    }
+
 }

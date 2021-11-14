@@ -32,12 +32,21 @@ public class RestrictionsServiceTest {
 
     @Test
     public void getRestriction_Success() {
+        //arrange
         Restrictions restriction = new Restrictions("Indoor", "Category", "2 pax");
+
+        //mock
         when(restrictions.save(any(Restrictions.class))).thenReturn(restriction);
         when(restrictions.findById(restriction.getId())).thenReturn(Optional.of(restriction));
+
+        //act
         Restrictions savedRestriction = restrictionsService.addRestrictions(restriction);
         Restrictions getRestriction = restrictionsService.getRestriction(restriction.getId());
+
+        //assert
         assertNotNull(getRestriction);
+
+        //verify
         verify(restrictions).save(restriction);
     }
 
@@ -54,13 +63,15 @@ public class RestrictionsServiceTest {
 
         // assert ***
         assertNotNull(savedRestriction);
+
+        //verify
         verify(restrictions).save(restriction);
     }
 
     @Test
     public void updateRestriction_NewDescription_ReturnUpdatedRestriction(){
+        //arrange
         Restrictions restriction = new Restrictions("Indoor", "Category", "Only 5 pax allowed for social gatherings");
-        String newDescription = "2 pax";
         //mock
         when(restrictions.save(any(Restrictions.class))).thenReturn(restriction);
         when(restrictions.findById(restriction.getId())).thenReturn(Optional.of(restriction));
@@ -69,21 +80,26 @@ public class RestrictionsServiceTest {
         Restrictions savedNewRestriction = restrictionsService.updateRestrictions(savedRestriction.getId(), restriction);
         //assert
         assertNotNull(savedNewRestriction);
+        //verify
         verify(restrictions, times(2)).save(restriction);
         verify(restrictions).findById(savedRestriction.getId());
     }
 
+    //Catch RestrictionNotFoundException
     @Test
     public void updateRestriction_NotFound_ReturnNull(){
-        //mock
-//        String description = "2 pax";
+        //Arrange
         Restrictions newRestriction = new Restrictions("Indoor", "Category", "newDesciption");
+
+        //mock
         when(restrictions.findById(10L)).thenReturn(Optional.empty());
 
         //act
         Restrictions updatedRestriction = restrictionsService.updateRestrictions(10L, newRestriction);
         //assert
         assertNull(updatedRestriction);
+
+        //verify
         verify(restrictions).findById(10L);
     }
 

@@ -27,54 +27,53 @@ public class EmployeeServiceImpl {
     public Employee getEmployeeByEmployeeIdAndUserId(Long employeeId, Long userId){
         return employees.findByIdAndUserId(employeeId, userId).map(employee2 ->{
             return employee2;
-        }).orElseThrow(()-> new EmployeeNotFoundException(employeeId));
+        }).orElse(null);
     }
 
-    public List<Employee> findbyExpireFetDate(long userid){
+    public List<Employee> getExpiredFetEmployees(long userid){
         return employees.listExpiredTestEmployees(userid); 
     }
     
-    public List<Employee> listTodayTests(long userid){
-        return employees.listTodayTests(userid); 
-    }
+    // public List<Employee> listTodayTests(long userid){
+    //     return employees.listTodayTests(userid); 
+    // }
 
     
     public Employee addEmployee(Long userId, Employee employee){
         return users.findById(userId).map(user2-> {
             //if user exist then set user and check for duplicated user name 
-            employee.setUser(user2);
             Employee check = employees.findById(employee.getId()).map(employee2 ->{
                 return employee2;
             }).orElse(null);
-
+            
             if(check != null){
-                throw new EmployeeExistsException(employee.getId()); 
+                return null;  
             }else{
+                employee.setUser(user2);
                 return employees.save(employee);
             }
-        }).orElseThrow(()-> new UserNotFoundException(userId));
+        }).orElse(null);
 
 
     }
 
 
     public Employee updateEmployee(Long userId, Long employeeId, Employee newEmployee){
-        if(!users.existsById(userId)){
-            throw new UserNotFoundException(userId);
-        }
         return employees.findByIdAndUserId(employeeId, userId).map(employee2 ->{
-            employee2.setName(newEmployee.getName());
-            employee2.setVaxStatus(newEmployee.isVaxStatus());
-            employee2.setFetDate(newEmployee.getFetDate());
+            setDetails(newEmployee, employee2);
             return employees.save(employee2);
-        }).orElseThrow(()->new EmployeeNotFoundException(employeeId));
+        }).orElse(null); 
 
     }
 
+    private void setDetails(Employee newEmployee, Employee employee2) {
+        employee2.setName(newEmployee.getName());
+        employee2.setVaxStatus(newEmployee.isVaxStatus());
+        employee2.setFetDate(newEmployee.getFetDate());
+    }
+
     public ResponseEntity<?> deleteEmployee(Long userId, Long employeeId){
-        if(!users.existsById(userId)){
-            throw new UserNotFoundException(userId);
-        }
+        
         return employees.findByIdAndUserId(employeeId,userId).map(employee2 ->{
             employees.delete(employee2);
             return ResponseEntity.ok().build();

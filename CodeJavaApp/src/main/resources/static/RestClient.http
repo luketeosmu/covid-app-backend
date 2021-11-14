@@ -32,13 +32,19 @@ DELETE http://localhost:8080/restrictions/2
 
 
 ###
-GET http://localhost:8080/users/1/businesses
-Authorization: Basic hihi4@gmail.com:Tester123
+GET http://localhost:8080/users/397/businesses/24
+Authorization: Basic royston1@gmail.com:Tester123
 
 ###
-POST http://localhost:8080/users/1/businesses
+
+###
+GET http://localhost:8080/users/332/businesses/1
+Authorization: Basic royston1@gmail.com:Tester123
+
+###
+POST http://localhost:8080/users/397/businesses
 Content-Type: application/json
-Authorization: Basic hihi4@gmail.com:Tester123
+Authorization: Basic royston1@gmail.com:Tester123
 
 {
     "businessName":"turks kebabab",
@@ -47,24 +53,26 @@ Authorization: Basic hihi4@gmail.com:Tester123
     "capacity":"1000"
 }
 ###
-PUT http://localhost:8080/users/2/businesses/1
+PUT http://localhost:8080/users/332/businesses/2
 Content-Type: application/json
-Authorization: Basic hihi@gmail.com:Tester123
+Authorization: Basic royston1@gmail.com:Tester123
 
 {
+    "businessName":"turksss kebabab",
     "category":"best kebab",
-    "outdoorIndoor":"O"
+    "outdoorIndoor":"O",
+    "capacity":"1000"
 }
 
 ###
 ###
 
-DELETE http://localhost:8080/users/1/businesses/1
-Authorization: Basic hihi@gmail.com:Tester123
+DELETE http://localhost:8080/users/332/businesses/1
+Authorization: Basic royston1@gmail.com:Tester123
 
 ### get all users
 GET http://localhost:8080/users
-Authorization: Basic hihi@gmail.com:Tester123
+Authorization: Basic royston1@gmail.com:Tester123
 
 
 ### get specific users
@@ -82,7 +90,21 @@ Content-Type: application/json
 # Authorization: Basic hihi@gmail.com:Tester123
 
 {
-        "username":"hihi@gmail.com",
+
+        "username":"test123@gmail.com",
+        "password": "Tester123",
+        "firstName":"firstName",
+        "lastName": "lastName",
+        "authorities": "ROLE_ADMIN"
+
+}
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+# Authorization: Basic hihi@gmail.com:Tester123
+
+{
+        "username":"troller@gmail.com",
         "password": "Tester123",
         "firstName":"firstName",
         "lastName": "lastName",
@@ -123,16 +145,21 @@ DELETE http://localhost:8080/users/2
 
 ### employee
 
-POST http://localhost:8080/users/1/employees
+POST http://localhost:8080/users/2/employees
 Content-Type: application/json
 
 {
-    "id":3,
+    "id":124,
     "name" : "john",
     "vaxStatus": true,
-    "fetDate" : "2021/09/05"
+    "fetDate" : "2021-09-05"
 }
 
+###
+GET http://localhost:8080/users/1/employees/124
+
+
+###
 ###
 GET http://localhost:8080/users/1/employees
 
@@ -145,7 +172,7 @@ Content-Type: application/json
 {
     "name" : "john luke",
     "vaxStatus": true,
-    "fetDate" : "2021/11/7"
+    "fetDate" : "2021-11-7"
 }
 
 ###

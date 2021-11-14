@@ -51,7 +51,8 @@ public class User implements UserDetails{
     @NotNull(message = "Last name shouldnt be null")
     private String lastName;
 
-    @NotNull(message = "Authorities should not be null")
+    // @JsonIgnore
+    // @NotNull(message = "Authorities should not be null")
     // We define two roles/authorities: ROLE_USER or ROLE_ADMIN
     private String authorities;  
 
@@ -67,6 +68,18 @@ public class User implements UserDetails{
 
     
 
+    
+
+    public User(Long id,String username,String password,String firstName,String lastName) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.businesses = new ArrayList<Business>();
+        this.employees = new ArrayList<Employee>();
+
+    }
 
     public User(String username,String password,String firstName,String lastName,String authorities) {
         this.username = username;
@@ -92,7 +105,6 @@ public class User implements UserDetails{
         this.username = username;
         this.password = password;
     }
-
     /* Return a collection of authorities granted to the user.
     */
     @Override
