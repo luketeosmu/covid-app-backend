@@ -132,13 +132,13 @@ public class UserServiceTest {
     }
 
     @Test
-    void updateUserPasword_Success_ReturnUser() {
+    void updateUserPassword_ValidUser_ReturnUser() {
         // arrange
-        User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
+        User user = new User(1L, "test@gmail.com", "Test123", "tes", "tes");
         User updatedUser = new User("test@gmail.com", "Test456", "tes", "tes", "ROLE_ADMIN");
 
         // mock
-        when(users.findById(user.getId())).thenReturn(Optional.of(user));
+        when(users.findById(anyLong())).thenReturn(Optional.of(user));
         when(encoder.encode(anyString())).thenReturn(updatedUser.getPassword());
         when(users.save(any(User.class))).thenReturn(user);
 
@@ -154,13 +154,13 @@ public class UserServiceTest {
     }
     
     @Test
-    void updateUserPasword_Failure_ReturnNull() {
+    void updateUserPassword_Failure_ReturnNull() {
         // arrange
-        User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
+        User user = new User(1L, "test@gmail.com", "Test123", "tes", "tes");
         User updatedUser = new User("test@gmail.com", "Test456", "tes", "tes", "ROLE_ADMIN");
 
         // mock
-        when(users.findById(user.getId())).thenReturn(Optional.of(user));
+        when(users.findById(anyLong())).thenReturn(Optional.of(user));
 
         // act
         User newUser = userService.updateUserPassword(user.getId(), updatedUser);
@@ -193,28 +193,26 @@ public class UserServiceTest {
         verify(users).findByUsername(updatedUser.getUsername());
     }
     
-        @Test
-        void updateUsername_UsernameExists_ThrowsError() {
-            // arrange
-            User user = new User(1L,"test@gmail.com", "Test1235", "tes", "tes");
-            User updatedUser = new User("test@gmail.com", "Test1235", "tes", "tes","ROLE_ADMIN");
-            User newUser = null ;
-            // mock
-            when(users.findById(anyLong())).thenReturn(Optional.of(user));
-            when(users.findByUsername(anyString())).thenReturn(Optional.of(user));
-            try{
-
-                // act
-                newUser = userService.updateUser(user.getId(), updatedUser);
-                
-                // assert
-            }catch(UsernameExistsException e ){
-                assertNull(newUser);
-                assertEquals(UsernameExistsException.class, e.getClass());
-                verify(users).findById(user.getId());
-                verify(users).findByUsername(updatedUser.getUsername());
-            }
+    @Test
+    void updateUsername_UsernameExists_ThrowUsernameExistsException() {
+        // arrange
+        User user = new User(1L,"test@gmail.com", "Test1235", "tes", "tes");
+        User updatedUser = new User("test@gmail.com", "Test1235", "tes", "tes","ROLE_ADMIN");
+        User newUser = null ;
+        // mock
+        when(users.findById(anyLong())).thenReturn(Optional.of(user));
+        when(users.findByUsername(anyString())).thenReturn(Optional.of(user));
+        try{
+            // act
+            newUser = userService.updateUser(user.getId(), updatedUser);
+        }catch(UsernameExistsException e ){
+            // assert
+            assertNull(newUser);
+            assertEquals(UsernameExistsException.class, e.getClass());
+            verify(users).findById(user.getId());
+            verify(users).findByUsername(updatedUser.getUsername());
         }
+    }
     
     @Test
     void updateDetails_Success_ReturnUser() {
@@ -238,7 +236,7 @@ public class UserServiceTest {
     }
     
     @Test
-    void updateDetailsOrUsername_InvalidUserId_ThrowUserNotFound() {
+    void updateDetailsOrUsername_InvalidUserId_ThrowUserNotFoundException() {
         // arrange
         User newUser = null ;
         User user = new User(1L,"test@gmail.com", "Test1235", "tes", "tes");
@@ -254,9 +252,6 @@ public class UserServiceTest {
             assertEquals(UserNotFoundException.class, e.getClass());
             verify(users).findById(user.getId());
         }
-            
     }
 
-
-    
 }

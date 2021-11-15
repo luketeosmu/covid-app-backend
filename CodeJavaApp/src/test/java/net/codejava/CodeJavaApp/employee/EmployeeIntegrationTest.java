@@ -163,7 +163,7 @@ public class EmployeeIntegrationTest {
 
 
     @Test
-    public void getExpireFetEmployees_Success() throws Exception {
+    public void getExpireFetEmployees_ValidUserId_Success() throws Exception {
         User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
         Long userId = users.save(user).getId();
         Employee employee = new Employee(123L, "EmployeeName", true);
@@ -181,9 +181,9 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
-    public void getExpireFetEmployees_Failure() throws Exception {
+    public void getExpireFetEmployees_InvalidUserId_Failure() throws Exception {
         User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
-        Long userId = users.save(user).getId();
+        users.save(user).getId();
         Employee employee = new Employee(123L, "EmployeeName", true);
         employee.setUser(user);
         employee.setFetDate(new Date(1635724800)); // november14 for testing
@@ -196,12 +196,12 @@ public class EmployeeIntegrationTest {
         assertEquals(404, result.getStatusCode().value());
     }
 
-    // Invalid UserId Tests
+
     @Test
     public void getEmployees_InvalidUserId_Failure() throws Exception {
         Employee employee = new Employee(1L, "luke", true);
         User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
-        Long userId = users.save(user).getId();
+        users.save(user).getId();
         employee.setUser(user);
         employees.save(employee);
         URI uri = new URI(baseUrl + port + "/users/" + 10L + "/employees");
@@ -217,11 +217,11 @@ public class EmployeeIntegrationTest {
         Employee employee = new Employee(123L, "EmployeeName", true);
         employee.setUser(user);
         employees.save(employee);
-        
+
         URI uri = new URI(baseUrl + port + "/users/" + 10L + "/employees/" + employee.getId());
-        
+
         ResponseEntity<Employee> result = restTemplate.getForEntity(uri, Employee.class);
-        
+
         assertEquals(404, result.getStatusCode().value());
     }
     

@@ -170,9 +170,7 @@ public class BusinessServiceTest {
         Business newBusiness = new Business("Biz2", "Category2", 'O', 20L);
         // mock
 
-        // when(businesses.save(any(Business.class))).thenReturn(business);
         when(businesses.findByBusinessIdAndUserId(any(Long.class), any(Long.class))).thenReturn(Optional.empty());
-        // when(users.existsById(any(Long.class))).thenReturn(true);
         // act
         Business updatedBusiness = businessService.updateBusiness(user.getId(), 20L, newBusiness);
 

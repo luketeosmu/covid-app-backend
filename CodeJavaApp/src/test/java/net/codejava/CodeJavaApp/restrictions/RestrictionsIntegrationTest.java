@@ -82,6 +82,18 @@ class RestrictionsIntegrationTest {
     }
 
     @Test
+    public void addRestriction_NoDescription_Failure() throws Exception {
+        URI uri = new URI(baseUrl + port + "/restrictions");
+        Restrictions restriction = new Restrictions("Indoor", "category", null);
+        users.save(new User("hihi@gmail.com", encoder.encode("Tester123") , " firstname", "lastname", "ROLE_ADMIN"));
+
+        ResponseEntity<Restrictions> result = restTemplate.withBasicAuth("hihi@gmail.com", "Tester123")
+                .postForEntity(uri, restriction, Restrictions.class);
+
+        assertEquals(400, result.getStatusCode().value());
+    }
+
+    @Test
     public void deleteRestriction_ValidRestrictionId_Success() throws Exception {
         Restrictions restriction = restrictions.save(new Restrictions("Indoor", "category", "description"));
         URI uri = new URI(baseUrl + port + "/restrictions/" + restriction.getId().longValue());
@@ -124,28 +136,5 @@ class RestrictionsIntegrationTest {
                 .exchange(uri, HttpMethod.PUT, new HttpEntity<>(newRestrictionInfo), Restrictions.class);
         assertEquals(404, result.getStatusCode().value());
     }
-
-    // @Test
-    // public void getAllRestrictions_Success() throws Exception {
-    //     URI uri = new URI(baseUrl + port + "/restrictions");
-    //     restrictions.save(new Restrictions("Indoor", "category", "description"));
-
-    //     ResponseEntity<Restrictions[]> result = restTemplate.getForEntity(uri, Restrictions[].class);
-    //     Restrictions[] restrictions = result.getBody();
-
-    //     assertEquals(200, result.getStatusCode().value());
-    //     assertEquals(1, restrictions.length);
-    // }
-
-//    @Test
-//    public void getRestrictions_Success() throws Exception {
-//        URI uri = new URI(baseUrl + port + "/restrictions");
-//        restrictions.save(new Restrictions("Indoor", "category", "description"));
-//
-//        given().get(uri).
-//                then().
-//                statusCode(200).
-//                body("size()", equalTo(1));
-//    }
 
 }

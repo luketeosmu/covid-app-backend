@@ -33,15 +33,15 @@ public class RestrictionsServiceTest {
     @Test
     public void getRestriction_Success() {
         //arrange
-        Restrictions restriction = new Restrictions("Indoor", "Category", "2 pax");
-
+        Restrictions restriction = new Restrictions(1L, "Indoor", "Category", "2 pax");
         //mock
         when(restrictions.save(any(Restrictions.class))).thenReturn(restriction);
-        when(restrictions.findById(restriction.getId())).thenReturn(Optional.of(restriction));
+        when(restrictions.findById(anyLong())).thenReturn(Optional.of(restriction));
 
         //act
         Restrictions savedRestriction = restrictionsService.addRestrictions(restriction);
         Restrictions getRestriction = restrictionsService.getRestriction(restriction.getId());
+//        restrictions.findById(restriction.getId());
 
         //assert
         assertNotNull(getRestriction);
@@ -53,7 +53,7 @@ public class RestrictionsServiceTest {
     @Test
     public void addRestriction_NewDescription_ReturnSavedRestriction(){
         // arrange ***
-        Restrictions restriction = new Restrictions("Indoor", "Category", "Only 5 pax allowed for social gatherings");
+        Restrictions restriction = new Restrictions(1L, "Indoor", "Category", "Only 5 pax allowed for social gatherings");
 
         // mock the "save" operation
         when(restrictions.save(any(Restrictions.class))).thenReturn(restriction);
@@ -69,12 +69,12 @@ public class RestrictionsServiceTest {
     }
 
     @Test
-    public void updateRestriction_NewDescription_ReturnUpdatedRestriction(){
+    public void updateRestriction_ValidRestrictionId_ReturnUpdatedRestriction(){
         //arrange
-        Restrictions restriction = new Restrictions("Indoor", "Category", "Only 5 pax allowed for social gatherings");
+        Restrictions restriction = new Restrictions(1L,"Indoor", "Category", "Only 5 pax allowed for social gatherings");
         //mock
         when(restrictions.save(any(Restrictions.class))).thenReturn(restriction);
-        when(restrictions.findById(restriction.getId())).thenReturn(Optional.of(restriction));
+        when(restrictions.findById(anyLong())).thenReturn(Optional.of(restriction));
         //act
         Restrictions savedRestriction = restrictionsService.addRestrictions(restriction);
         Restrictions savedNewRestriction = restrictionsService.updateRestrictions(savedRestriction.getId(), restriction);
@@ -87,12 +87,12 @@ public class RestrictionsServiceTest {
 
     //Catch RestrictionNotFoundException
     @Test
-    public void updateRestriction_NotFound_ReturnNull(){
+    public void updateRestriction_InvalidRestrictionId_ReturnNull(){
         //Arrange
-        Restrictions newRestriction = new Restrictions("Indoor", "Category", "newDesciption");
+        Restrictions newRestriction = new Restrictions(1L, "Indoor", "Category", "newDesciption");
 
         //mock
-        when(restrictions.findById(10L)).thenReturn(Optional.empty());
+        when(restrictions.findById(anyLong())).thenReturn(Optional.empty());
 
         //act
         Restrictions updatedRestriction = restrictionsService.updateRestrictions(10L, newRestriction);
