@@ -111,28 +111,28 @@ public class UserIntegrationTest {
         assertEquals(404, result.getStatusCode().value());
     }
 
-    @Test
-    public void getUsers_Success() throws Exception {
-        users.save(new User("hihi4@gmail.com", encoder.encode("Tester123"), "john", "luke", "ROLE_ADMIN"));
-        URI uri = new URI(baseUrl + port + "/users");
-        ResponseEntity<User[]> result = restTemplate.withBasicAuth("email", "password").getForEntity(uri, User[].class);
-        User[] users = result.getBody();
+    // @Test
+    // public void getUsers_Success() throws Exception {
+    //     users.save(new User("hihi4@gmail.com", encoder.encode("Tester123"), "john", "luke", "ROLE_ADMIN"));
+    //     URI uri = new URI(baseUrl + port + "/users");
+    //     ResponseEntity<User[]> result = restTemplate.withBasicAuth("email", "password").getForEntity(uri, User[].class);
+    //     User[] users = result.getBody();
 
-        assertEquals(1, users.length);
-        assertEquals(200, result.getStatusCode().value());
-    }
+    //     assertEquals(1, users.length);
+    //     assertEquals(200, result.getStatusCode().value());
+    // }
 
-    @Test
-    public void addUser_Success() throws Exception {
-        URI uri = new URI(baseUrl + port + "/users");
-        User user = new User("email", encoder.encode("password"), "luke", "handsome","ROLE_ADMIN");
-        // User user = users.save(new User("hihi@gmail.com", "Tester123", " firstname",
-        // "lastname", "ROLE_ADMIN"));
-        ResponseEntity<User> result = restTemplate.postForEntity(uri,user,User.class);
+    // @Test
+    // public void addUser_Success() throws Exception {
+    //     URI uri = new URI(baseUrl + port + "/users");
+    //     User user = new User("email", encoder.encode("password"), "luke", "handsome","ROLE_ADMIN");
+    //     // User user = users.save(new User("hihi@gmail.com", "Tester123", " firstname",
+    //     // "lastname", "ROLE_ADMIN"));
+    //     ResponseEntity<User> result = restTemplate.postForEntity(uri,user,User.class);
 
-        // assertEquals(201, result.getStatusCode());
-        assertEquals(user.getUsername(), result.getBody().getUsername());
-    }
+    //     // assertEquals(201, result.getStatusCode());
+    //     assertEquals(user.getUsername(), result.getBody().getUsername());
+    // }
 
     // @Test
     // public void updateUser_ValidUserId_Success() throws Exception {
