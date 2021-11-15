@@ -34,6 +34,11 @@ public class BusinessController {
         this.users = users;
     }
 
+    /**
+     * gets all businesses under the user
+     * @param userId
+     * @return list of businesses
+     */
     @GetMapping("/users/{userid}/businesses")
     public List<Business> getBusinessByUserId(@PathVariable(value = "userid") Long userId) {
         if (!users.existsById(userId)) {
@@ -42,6 +47,13 @@ public class BusinessController {
         return businessService.getAllBusinesses(userId);
     }
 
+
+    /**
+     * get specific business given id and userid
+     * @param userId
+     * @param businessId
+     * @return business 
+     */
     @GetMapping("/users/{userid}/businesses/{businessid}")
     public Business getBusinessByBusinessIdAndUserId(@PathVariable(value = "userid") Long userId,
             @PathVariable(value = "businessid") Long businessId) {
@@ -55,6 +67,12 @@ public class BusinessController {
         return business;
     }
 
+    /**
+     * add new business 
+     * @param userId
+     * @param business
+     * @return business
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/users/{userid}/businesses")
@@ -69,6 +87,13 @@ public class BusinessController {
         return addedBusiness;
     }
 
+    /**
+     * update business with new details 
+     * @param userId
+     * @param businessId
+     * @param newBusiness
+     * @return Business
+     */
     @PutMapping("/users/{userid}/businesses/{businessId}")
     public Business updateBusinesses(@PathVariable(value = "userid") Long userId,
             @PathVariable(value = "businessId") Long businessId, @RequestBody Business newBusiness) {
@@ -76,12 +101,17 @@ public class BusinessController {
             throw new UserNotFoundException(userId);
         }
         Business updatedBusiness = businessService.updateBusiness(userId, businessId, newBusiness);
-        if(updatedBusiness == null){
+        if (updatedBusiness == null) {
             throw new BusinessNotFoundException(businessId);
         }
         return updatedBusiness;
     }
-
+    /**
+     * delete business given userid and businessid
+     * @param userid
+     * @param businessId
+     * @return ResponseEntity 
+     */
     @DeleteMapping("/users/{userid}/businesses/{businessId}")
     public ResponseEntity<?> deleteBusiness(@PathVariable Long userid, @PathVariable Long businessId) {
         if (!users.existsById(userid)) {

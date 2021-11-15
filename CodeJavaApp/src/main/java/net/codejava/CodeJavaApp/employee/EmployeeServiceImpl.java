@@ -1,4 +1,5 @@
 package net.codejava.CodeJavaApp.employee;
+
 import java.util.*;
 import java.util.Date;
 
@@ -20,49 +21,55 @@ public class EmployeeServiceImpl {
     @Autowired
     private EmployeeRepository employees;
 
-    public List<Employee> getAllEmployee(Long userId){
+    public List<Employee> getAllEmployee(Long userId) {
         return employees.findByUserId(userId);
     }
 
-    public Employee getEmployeeByEmployeeIdAndUserId(Long employeeId, Long userId){
-        return employees.findByIdAndUserId(employeeId, userId).map(employee2 ->{
+    public Employee getEmployeeByEmployeeIdAndUserId(Long employeeId, Long userId) {
+        return employees.findByIdAndUserId(employeeId, userId).map(employee2 -> {
             return employee2;
         }).orElse(null);
     }
 
-    public List<Employee> getExpiredFetEmployees(long userid){
-        return employees.listExpiredTestEmployees(userid); 
+    /**
+     * added method to get expiriing fet employees
+     * 
+     * @param userid
+     * @return list of employees
+     */
+    public List<Employee> getExpiredFetEmployees(long userid) {
+        return employees.listExpiredTestEmployees(userid);
     }
-    
-    // public List<Employee> listTodayTests(long userid){
-    //     return employees.listTodayTests(userid); 
-    // }
 
-    
-    public Employee addEmployee(Long userId, Employee employee){
-        return users.findById(userId).map(user2-> {
-            //if user exist then set user and check for duplicated user name 
-            Employee check = employees.findById(employee.getId()).map(employee2 ->{
+    /**
+     * added extra logic to make sure no same id exists 
+     * @param userId
+     * @param employee
+     * @return added employee
+     */
+    public Employee addEmployee(Long userId, Employee employee) {
+        return users.findById(userId).map(user2 -> {
+            // if user exist then set user and check for duplicated user name
+            Employee check = employees.findById(employee.getId()).map(employee2 -> {
                 return employee2;
             }).orElse(null);
-            
-            if(check != null){
-                return null;  
-            }else{
+
+            if (check != null) {
+                return null;
+            } else {
                 employee.setUser(user2);
                 return employees.save(employee);
             }
         }).orElse(null);
 
-
     }
 
 
-    public Employee updateEmployee(Long userId, Long employeeId, Employee newEmployee){
-        return employees.findByIdAndUserId(employeeId, userId).map(employee2 ->{
+    public Employee updateEmployee(Long userId, Long employeeId, Employee newEmployee) {
+        return employees.findByIdAndUserId(employeeId, userId).map(employee2 -> {
             setDetails(newEmployee, employee2);
             return employees.save(employee2);
-        }).orElse(null); 
+        }).orElse(null);
 
     }
 
@@ -72,12 +79,18 @@ public class EmployeeServiceImpl {
         employee2.setFetDate(newEmployee.getFetDate());
     }
 
-    public ResponseEntity<?> deleteEmployee(Long userId, Long employeeId){
-        
-        return employees.findByIdAndUserId(employeeId,userId).map(employee2 ->{
+    /**
+     * deletes an employee with a given userid and employeeeid 
+     * returns response entity to get the status code
+     * @param userId
+     * @param employeeId
+     * @return responseentity
+     */
+    public ResponseEntity<?> deleteEmployee(Long userId, Long employeeId) {
+        return employees.findByIdAndUserId(employeeId, userId).map(employee2 -> {
             employees.delete(employee2);
             return ResponseEntity.ok().build();
-        }).orElseThrow(()-> new EmployeeNotFoundException(employeeId));
+        }).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
     }
 
 }

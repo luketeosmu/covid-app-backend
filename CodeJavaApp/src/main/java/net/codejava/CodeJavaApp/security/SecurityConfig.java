@@ -55,6 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.PUT, "/users/*").permitAll()
             .antMatchers(HttpMethod.DELETE, "/users/*").hasAnyRole("ADMIN", "USER")
             .antMatchers(HttpMethod.PUT, "/users/{userId}/changePassword").hasAnyRole("ADMIN", "USER")
+            //authentication and authorization for employee class 
+            .antMatchers(HttpMethod.GET, "/users/*/employees").permitAll()
+            .antMatchers(HttpMethod.GET, "/users/*/employees/*").permitAll()
+            .antMatchers(HttpMethod.POST, "/users/*/employees").permitAll()
+            .antMatchers(HttpMethod.PUT, "/users/*/employees/*").permitAll()
+            .antMatchers(HttpMethod.DELETE, "/users/*/employees/*").permitAll()
             .and()
         .csrf().disable() // CSRF protection is needed only for browser based attacks
         .formLogin().disable()

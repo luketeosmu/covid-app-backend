@@ -20,11 +20,21 @@ public class RestrictionsController {
     @Autowired 
     private RestrictionsServiceImpl restrictionSvc;
 
+    /**
+     * list all restrictions
+     * @return list of restrictions 
+     */
     @GetMapping("/restrictions")
     public List<Restrictions> getAllRestrictions() {
         return restrictionSvc.getAllRestrictions();
     }
 
+
+    /**
+     * get the specific restriction with the id 
+     * @param restrictionId
+     * @return restriction 
+     */
     @GetMapping("/restrictions/{restrictionId}")
     public Restrictions getRestriction(@PathVariable(value = "restrictionId") Long restrictionId) {
 
@@ -35,13 +45,22 @@ public class RestrictionsController {
         return ret;
     }
 
+    /**
+     * add new restriction 
+     * @param restriction
+     * @return added Restriction
+     */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/restrictions")
     public Restrictions addRestrictions(@Valid @RequestBody Restrictions restriction) {
         return restrictionSvc.addRestrictions(restriction);
     }
 
-
+    /**
+     * update restriction details 
+     * @param restriction
+     * @return updated Restriction
+     */
     @PutMapping("/restrictions/{restrictionId}")
     public Restrictions updateRestrictions(
                                  @PathVariable (value = "restrictionId") Long restrictionId,
@@ -53,16 +72,10 @@ public class RestrictionsController {
         return restriction;
     }
 
-    /*
-    @PutMapping("/books/{id}")
-    public Book updateBook(@PathVariable Long id, @Valid @RequestBody Book newBookInfo){
-        Book book = bookService.updateBook(id, newBookInfo);
-        if(book == null) throw new BookNotFoundException(id);
-        
-        return book;
-    }
-    */
-
+    /**
+     * delete restiction given id
+     * @param id
+     */
     @DeleteMapping("/restrictions/{id}")
     public void deleteRestriction(@PathVariable Long id){
         try{

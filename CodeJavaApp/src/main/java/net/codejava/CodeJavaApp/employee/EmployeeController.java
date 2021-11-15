@@ -34,6 +34,11 @@ public class EmployeeController {
     @Autowired
     private UserRepository users;
 
+    /**
+     * List all employees under this user 
+     * @param userId
+     * @return list of all employees
+     */
     @GetMapping("/users/{userid}/employees")
     public List<Employee> getEmployeesByUserId(@PathVariable (value = "userid") Long userId){
         if(!users.existsById(userId)){
@@ -42,6 +47,11 @@ public class EmployeeController {
         return employeesvc.getAllEmployee(userId);
     }
 
+    /**
+     * List all employees with FET expiring today
+     * @param userId
+     * @return list of employees who needs to do fet today
+     */
     @GetMapping("/users/{userid}/employees/expired")
     public List<Employee> getByFetDate(@PathVariable (value = "userid") Long userId) {
         if(!users.existsById(userId)){
@@ -50,14 +60,14 @@ public class EmployeeController {
         return employeesvc.getExpiredFetEmployees(userId);
     }
 
-    // @GetMapping("/users/{userid}/employees/today")
-    // public List<Employee> listTodayTests(@PathVariable (value = "userid") Long userId) {
-    //     if(!users.existsById(userId)){
-    //         throw new UserNotFoundException(userId);
-    //     }
-    //     return employeesvc.listTodayTests(userId);
-    // }
-
+    /**
+     * search for employee with given id under the user
+     * throw UserNotFoundException if the userid does not exist
+     * throw EmployeeNotFoundException if employee does not exist 
+     * @param userId
+     * @param employeeId
+     * @return employee
+     */
     @GetMapping("/users/{userid}/employees/{employeeId}")
     public Employee getEmployeeByEmployeeIdAndUserId(@PathVariable (value = "userid") Long userId,
                                                     @PathVariable (value = "employeeId") Long employeeId){
@@ -72,6 +82,15 @@ public class EmployeeController {
     }
 
     
+    /**
+     * add a new employee with POST request to "/users/{userid}/employees"
+     * throw UserNotFoundException if the userid does not exist
+     * check if ID already taken :throw EmployeeExistsException if yes
+     * else employee set user then save 
+     * @param userId
+     * @param employee
+     * @return added employee
+     */
 
     @ResponseStatus(HttpStatus.CREATED)
     @CrossOrigin(origins = "http://localhost:3000")
@@ -87,6 +106,13 @@ public class EmployeeController {
         return employee2;
     }
 
+    /**
+     * Updates employee with PUT request to "/users/{userid}/employees/*"
+     * @param userId
+     * @param employeeId
+     * @param newEmployee
+     * @return updated employee
+     */
     @PutMapping("/users/{userid}/employees/{employeeId}")
     public Employee updateEmployee(@PathVariable (value = "userid") Long userId ,
             @PathVariable (value = "employeeId") Long employeeId, @RequestBody Employee newEmployee) {
@@ -100,6 +126,13 @@ public class EmployeeController {
         return employee;
     }
 
+
+    /**
+     * Delete employee with DELETE request to "/users/{userid}/employees/*"
+     * @param userid
+     * @param employeeId
+     * @return ResponeEntity with status code 
+     */
     @DeleteMapping("/users/{userid}/employees/{employeeId}")
     public ResponseEntity<?> deleteEmployee(@PathVariable Long userid,@PathVariable Long employeeId ){
         if(!users.existsById(userid)){

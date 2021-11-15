@@ -25,6 +25,7 @@ public class UserService {
     }
 
     /**
+     * added extra logic to check if username already exists
      * Takes in a user and check if the username already exists if exist return null
      * else save the user with encoded password and return
      * 
@@ -59,8 +60,9 @@ public class UserService {
     }
 
     /**
-     * if user is found then updates password firstname and lastname then save and
-     * return the user -> if user not found then throw exception
+     * added extra logic for frontend to update 
+     * if given user object has dummy email, then only update the other details
+     * else check if the new username already exist, if the username is new then update 
      * 
      * @param userId
      * @param newUser
@@ -75,24 +77,33 @@ public class UserService {
                 }
                 user.setUsername(newUser.getUsername());
             } else {
-                user.setFirstName(newUser.getFirstName());
-                user.setLastName(newUser.getLastName());
-                user.setFetConfig(newUser.getFetConfig());
+                setDetails(newUser, user);
             }
             return users.save(user);
         }).orElseThrow(() -> new UserNotFoundException(userId));
     }
 
+    private void setDetails(User newUser, User user) {
+        user.setFirstName(newUser.getFirstName());
+        user.setLastName(newUser.getLastName());
+        user.setFetConfig(newUser.getFetConfig());
+    }
+
+    /**
+     * added extra method to change password specifically
+     * @param userId
+     * @param newUser
+     * @return updated user/null
+     */
     public User updateUserPassword(Long userId, User newUser) {
         return users.findById(userId).map(user -> {
             user.setPassword(encoder.encode(newUser.getPassword()));
             return users.save(user);
-        }).orElseThrow(() -> new UserNotFoundException(userId));
+        }).orElse(null);
     }
     
     /**
      * deleteUser with id
-     * 
      * @param userId
      */
     public void deleteUser(Long userId) {

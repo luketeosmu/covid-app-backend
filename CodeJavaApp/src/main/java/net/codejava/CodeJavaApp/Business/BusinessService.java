@@ -48,7 +48,8 @@ public class BusinessService {
     }
 
     /**
-     * check for user existence before checking for duplicated business name 
+     * added logic to check for exisiting business name 
+     * make sure no duplicate for business name
      * @param userId
      * @param business
      * @return saved business/ null 
@@ -94,6 +95,12 @@ public class BusinessService {
         business2.setBusinessName(newBusiness.getBusinessName());
     }
 
+    /**
+     * delete business given businessId
+     * @param userId
+     * @param businessId
+     * @return ResponseEntity
+     */
     public ResponseEntity<?> deleteBusiness(Long userId, Long businessId){
         if(!users.existsById(userId)){
             throw new UserNotFoundException(userId);
