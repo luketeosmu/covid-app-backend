@@ -120,11 +120,11 @@ public class BusinessServiceTest {
         Business business = new Business(1L, "Biz", "Category", 'I', 20L, user);
         user.getBusinesses().add(business);
         // act
-        when(businesses.findByUserId(anyLong())).thenReturn(null);
-        List<Business> returnBusinesses = businessService.getAllBusinesses(user.getId()+1);
+        when(users.findById(anyLong())).thenReturn(null); 
+        List<Business> returnBusinesses = businessService.getAllBusinesses(user.getId());
         // assert
         assertNull(returnBusinesses);
-        verify(businesses).findByUserId(user.getId()+1);
+        verify(users).findById(user.getId());
     }
 
 

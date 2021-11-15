@@ -262,4 +262,17 @@ public class EmployeeIntegrationTest {
                 HttpMethod.DELETE, null, Void.class);
         assertEquals(404, result.getStatusCode().value());
     }
+
+    //validation fail test
+    @Test
+    public void addEmployee_NewEmployeeNoId_failure() throws Exception {
+        Employee employee = new Employee(null, "luke", true);
+        User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
+        Long userId = users.save(user).getId();
+        employee.setUser(user);
+        // employees.save(employee);
+        URI uri = new URI(baseUrl + port + "/users/" + userId + "/employees");
+        ResponseEntity<Employee> result = restTemplate.postForEntity(uri, employee, Employee.class);
+        assertEquals(400, result.getStatusCode().value());
+    }
 }

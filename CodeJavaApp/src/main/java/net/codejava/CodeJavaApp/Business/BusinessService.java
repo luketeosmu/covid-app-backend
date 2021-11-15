@@ -102,9 +102,6 @@ public class BusinessService {
      * @return ResponseEntity
      */
     public ResponseEntity<?> deleteBusiness(Long userId, Long businessId){
-        if(!users.existsById(userId)){
-            throw new UserNotFoundException(userId);
-        }
         return businessRepository.findByBusinessIdAndUserId(businessId,userId).map(business2 ->{
             businessRepository.delete(business2);
             return ResponseEntity.ok().build();
