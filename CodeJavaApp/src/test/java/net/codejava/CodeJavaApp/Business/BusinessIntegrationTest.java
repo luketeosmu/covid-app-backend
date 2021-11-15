@@ -163,8 +163,66 @@ public class BusinessIntegrationTest {
         Business newBusiness = new Business("newname", "category", 'O', 20L);
 
         ResponseEntity<Business> result = restTemplate.exchange(uri, HttpMethod.PUT, new HttpEntity<>(newBusiness),
+        Business.class);
+        assertEquals(404, result.getStatusCode().value());
+        
+    }
+    
+    
+    //invalid userid testing 
+    @Test
+    public void addBusiness_InvalidUserId_Failure() throws Exception {
+        User user = users.save(new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN"));
+        Business business = new Business(1L, "name", "category", 'O', 20L, user);
+        // business.setUser(user);
+        URI uri = new URI(baseUrl + port + "/users/" + 10L + "/businesses");
+        ResponseEntity<Business> result = restTemplate.postForEntity(uri, business, Business.class);
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void getBusinesses_InvalidUserId_Failure() throws Exception {
+        User user = users.save(new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN"));
+        URI uri = new URI(baseUrl + port + "/users/" + 1034567L + "/businesses");
+
+        businesses.save(new Business(1L, "name", "category", 'O', 20L, user));
+
+        ResponseEntity<Business> result = restTemplate.getForEntity(uri, Business.class);
+
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void getBusiness_InvalidUserId_Failure() throws Exception {
+        User user = users.save(new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN"));
+        Business business = businesses.save(new Business(1L, "name", "category", 'O', 20L, user));
+        URI uri = new URI(baseUrl + port + "/users/" + 10L + "/businesses/" + business.getBusinessId());
+
+        ResponseEntity<Business> result = restTemplate.getForEntity(uri, Business.class);
+
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void updateBusiness_InvalidUserId_Failure() throws Exception {
+        User user = users.save(new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN"));
+        Business business = businesses.save(new Business(1L, "name", "category", 'O', 20L, user));
+        URI uri = new URI(baseUrl + port + "/users/" + 10L + "/businesses/" + business.getBusinessId());
+        Business newBusiness = new Business("newname", "category", 'O', 20L);
+
+        ResponseEntity<Business> result = restTemplate.exchange(uri, HttpMethod.PUT, new HttpEntity<>(newBusiness),
                 Business.class);
         assertEquals(404, result.getStatusCode().value());
-
     }
+
+    @Test
+    public void deleteBusiness_InvalidUserId_Failure() throws Exception {
+        User user = users.save(new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN"));
+        Business business = businesses.save(new Business(1L, "name", "category", 'O', 20L, user));
+        URI uri = new URI(baseUrl + port + "/users/" + 10L  + "/businesses/" + business.getBusinessId());
+
+        ResponseEntity<Void> result = restTemplate.exchange(uri, HttpMethod.DELETE, null, Void.class);
+        assertEquals(404, result.getStatusCode().value());
+    }
+    
 }

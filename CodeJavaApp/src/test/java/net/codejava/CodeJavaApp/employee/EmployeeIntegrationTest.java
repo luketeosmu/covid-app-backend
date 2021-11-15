@@ -134,9 +134,23 @@ public class EmployeeIntegrationTest {
         assertEquals(200, result.getStatusCode().value());
         assertEquals(1, listEmployees.length);
     }
-
     @Test
-    public void getBusiness_InvalidBusinessId_Failure() throws Exception {
+    public void getEmployee_ValidEmployeeId_Success() throws Exception {
+        User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
+        Long userId = users.save(user).getId();
+        Employee employee = new Employee(123L, "EmployeeName", true);
+        employee.setUser(user);
+        employees.save(employee);
+
+        URI uri = new URI(baseUrl + port + "/users/" + userId + "/employees/" + employee.getId());
+
+        ResponseEntity<Employee> result = restTemplate.getForEntity(uri, Employee.class);
+
+        assertEquals(200, result.getStatusCode().value());
+    }
+    
+    @Test
+    public void getEmployee_InvalidEmployeeId_Failure() throws Exception {
         User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
         Long userId = users.save(user).getId();
         Employee employee = new Employee(123L, "luke", true);
@@ -147,53 +161,105 @@ public class EmployeeIntegrationTest {
         assertEquals(404, result.getStatusCode().value());
     }
 
+
     @Test
-    public void getEmployee_ValidEmployeeId_Success() throws Exception {
+    public void getExpireFetEmployees_Success() throws Exception {
         User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
         Long userId = users.save(user).getId();
-        Employee employee = new Employee(123L,"EmployeeName", true);
+        Employee employee = new Employee(123L, "EmployeeName", true);
         employee.setUser(user);
+        employee.setFetDate(new Date(1635724800)); // November14 for testing
         employees.save(employee);
 
-        URI uri = new URI(baseUrl + port + "/users/"+ userId +"/employees/" + employee.getId());
+        URI uri = new URI(baseUrl + port + "/users/" + userId + "/employees/expired");
+
+        ResponseEntity<Employee[]> result = restTemplate.getForEntity(uri, Employee[].class);
+        Employee[] list = result.getBody();
+
+        assertEquals(200, result.getStatusCode().value());
+        assertEquals(1, list.length);
+    }
+
+    @Test
+    public void getExpireFetEmployees_Failure() throws Exception {
+        User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
+        Long userId = users.save(user).getId();
+        Employee employee = new Employee(123L, "EmployeeName", true);
+        employee.setUser(user);
+        employee.setFetDate(new Date(1635724800)); // november14 for testing
+        employees.save(employee);
+
+        URI uri = new URI(baseUrl + port + "/users/" + 23L + "/employees/expired");
 
         ResponseEntity<Employee> result = restTemplate.getForEntity(uri, Employee.class);
 
-        assertEquals(200,result.getStatusCode().value());
+        assertEquals(404, result.getStatusCode().value());
     }
 
+    // Invalid UserId Tests
     @Test
-    public void getExpireFetEmployees_Success() throws Exception{
+    public void getEmployees_InvalidUserId_Failure() throws Exception {
+        Employee employee = new Employee(1L, "luke", true);
         User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
         Long userId = users.save(user).getId();
-        Employee employee = new Employee(123L,"EmployeeName", true);
         employee.setUser(user);
-        employee.setFetDate(new Date(1635724800)); //November14 for testing 
         employees.save(employee);
+        URI uri = new URI(baseUrl + port + "/users/" + 10L + "/employees");
+        ResponseEntity<Employee> result = restTemplate.getForEntity(uri, Employee.class);
 
-        URI uri = new URI(baseUrl + port + "/users/"+ userId +"/employees/expired");
-
-        ResponseEntity<Employee[]> result= restTemplate.getForEntity(uri, Employee[].class);
-        Employee[] list = result.getBody();
-
-        assertEquals(200,result.getStatusCode().value());
-        assertEquals(1,list.length);
+        assertEquals(404, result.getStatusCode().value());
     }
-
+    
     @Test
-    public void getExpireFetEmployees_Failure() throws Exception{
+    public void getEmployee_InvalidUserId_Failure() throws Exception {
         User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
         Long userId = users.save(user).getId();
-        Employee employee = new Employee(123L,"EmployeeName", true);
+        Employee employee = new Employee(123L, "EmployeeName", true);
         employee.setUser(user);
-        employee.setFetDate(new Date(1635724800)); //november14 for testing  
         employees.save(employee);
-
-        URI uri = new URI(baseUrl + port + "/users/"+ 23L +"/employees/expired");
-
-        ResponseEntity<Employee> result= restTemplate.getForEntity(uri, Employee.class);
-
-        assertEquals(404,result.getStatusCode().value());
+        
+        URI uri = new URI(baseUrl + port + "/users/" + 10L + "/employees/" + employee.getId());
+        
+        ResponseEntity<Employee> result = restTemplate.getForEntity(uri, Employee.class);
+        
+        assertEquals(404, result.getStatusCode().value());
     }
-
+    
+    @Test
+    public void addEmployee_InvalidUserId_Failure() throws Exception {
+        Employee employee = new Employee(1L, "luke", true);
+        User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
+        users.save(user);
+        employee.setUser(user);
+        // employees.save(employee);
+        URI uri = new URI(baseUrl + port + "/users/" + 10L + "/employees");
+        ResponseEntity<Employee> result = restTemplate.postForEntity(uri, employee, Employee.class);
+        assertEquals(404, result.getStatusCode().value());
+    }
+    
+    @Test
+    public void updateEmployee_InvalidUserId_Failure() throws Exception {
+        Employee toUpdate = new Employee(100L, "luke", true);
+        Employee newEmployeeInfo = new Employee(100L, "John", false);
+        User user = users.save(new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN"));
+        toUpdate.setUser(user);
+        employees.save(toUpdate).getId();
+        URI uri = new URI(baseUrl + port + "/users/" + 10L+ "/employees/" + toUpdate.getId());
+        ResponseEntity<Employee> result = restTemplate.exchange(uri,
+                HttpMethod.PUT, new HttpEntity<>(newEmployeeInfo), Employee.class);
+        assertEquals(404, result.getStatusCode().value());
+    }
+    
+    @Test
+    public void deleteEmployee_InvalidUserId_Failure() throws Exception {
+        Employee toDelete = new Employee(100L, "luke", true);
+        User user = new User("test@gmail.com", encoder.encode("Test12345"), "tes", "tes", "ROLE_ADMIN");
+        Long userId = users.save(user).getId();
+        toDelete.setUser(user);
+        employees.save(toDelete);
+        URI uri = new URI(baseUrl + port + "/users/" + 10L + "/employees/" + toDelete.getId());
+        ResponseEntity<Void> result = restTemplate.withBasicAuth("test@gmail.com", "Test12345").exchange(uri,
+                HttpMethod.DELETE, null, Void.class);
+        assertEquals(404, result.getStatusCode().value());
+    }
 }
