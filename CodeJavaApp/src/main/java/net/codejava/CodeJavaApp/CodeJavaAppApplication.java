@@ -14,12 +14,6 @@ import net.codejava.CodeJavaApp.restrictions.*;
 
 @SpringBootApplication
 public class CodeJavaAppApplication {
-
-	// public static void main(String[] args) {
-	// 	SpringApplication.run(CodeJavaAppApplication.class, args);
-	// }
-
-
 	public static void main(String[] args) {
 		
 		ApplicationContext ctx = SpringApplication.run(CodeJavaAppApplication.class, args);
