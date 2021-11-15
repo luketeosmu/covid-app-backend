@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -51,6 +52,25 @@ public class UserServiceTest {
         verify(users).save(user);
     }
 
+    
+    @Test
+    public void addUser_SameUsername_ReturnNull() {
+        // arrange ***
+        User user = new User("email@gmail.com", "Strongpassword", "john", "Luke", "ROLE_USER");
+        
+        // mock
+        when(users.findByUsername(any(String.class))).thenReturn(Optional.of(user));
+        
+        // act ***
+        User savedUser = userService.addUser(user);
+        
+        // assert ***
+        assertNull(savedUser);
+        
+        // verify
+        verify(users).findByUsername(user.getUsername());
+    }
+
     @Test
     public void getUsers_Success_Return() {
         // arrange ***
@@ -59,70 +79,17 @@ public class UserServiceTest {
         list.add(user);
         // mock the save operation
         when(users.findAll()).thenReturn(list);
-
+        
         // act ***
         List<User> savedUser = userService.getUsers();
-
+        
         // assert **
         assertNotNull(savedUser);
         assertEquals(1, savedUser.size());
         // verify
         verify(users).findAll();
     }
-
-    @Test
-    public void addUser_SameUsername_ReturnNull() {
-        // arrange ***
-        User user = new User("email@gmail.com", "Strongpassword", "john", "Luke", "ROLE_USER");
-
-        // mock
-        when(users.findByUsername(any(String.class))).thenReturn(Optional.of(user));
-
-        // act ***
-        User savedUser = userService.addUser(user);
-
-        // assert ***
-        assertNull(savedUser);
-
-        // verify
-        verify(users).findByUsername(user.getUsername());
-    }
-
-    @Test
-    void updateUserPassword_UserNotFound_ReturnNull() {
-        User updatedUser = null;
-        User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
-        // mock
-        when(users.findById(anyLong())).thenReturn(Optional.empty());
-
-        // act
-        updatedUser = userService.updateUserPassword(10L, user);
-
-        assertNull(updatedUser);
-
-        // verify
-        verify(users).findById(10L);
-    }
-
-    @Test
-    void updateUserPasword_Success_ReturnUser() {
-        // arrange
-        User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
-        User updatedUser = new User("test@gmail.com", "Test123", "NewName", "tes", "ROLE_ADMIN");
-
-        // mock
-        when(users.save(any(User.class))).thenReturn(user);
-        when(users.findById(user.getId())).thenReturn(Optional.of(user));
-
-        // act
-        User newUser = userService.updateUser(user.getId(), updatedUser);
-
-        // assert
-        assertNotNull(newUser);
-        verify(users).save(user);
-        verify(users).findById(user.getId());
-    }
-
+    
     @Test
     void getUser_UsernamePasswordValid_ReturnUser() {
         User user = new User("test@gmail.com", encoder.encode("Test123"), "tes", "tes", "ROLE_ADMIN");
@@ -151,4 +118,145 @@ public class UserServiceTest {
         verify(encoder).matches(reqUser.getPassword() , user.getPassword());
     }
 
+    @Test
+    void updateUserPassword_UserNotFound_ReturnNull() {
+        User updatedUser = null;
+        User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
+        // mock
+        when(users.findById(anyLong())).thenReturn(Optional.empty());
+        // act
+        updatedUser = userService.updateUserPassword(10L, user);
+        // verify
+        assertNull(updatedUser);
+        verify(users).findById(10L);
+    }
+
+    @Test
+    void updateUserPasword_Success_ReturnUser() {
+        // arrange
+        User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
+        User updatedUser = new User("test@gmail.com", "Test456", "tes", "tes", "ROLE_ADMIN");
+
+        // mock
+        when(users.findById(user.getId())).thenReturn(Optional.of(user));
+        when(encoder.encode(anyString())).thenReturn(updatedUser.getPassword());
+        when(users.save(any(User.class))).thenReturn(user);
+
+        // act
+        User newUser = userService.updateUserPassword(user.getId(), updatedUser);
+
+        // assert
+        assertNotNull(newUser);
+        assertEquals(updatedUser.getPassword(), newUser.getPassword());
+        verify(users).save(user);
+        verify(users).findById(user.getId());
+        verify(encoder).encode(user.getPassword());
+    }
+    
+    @Test
+    void updateUserPasword_Failure_ReturnNull() {
+        // arrange
+        User user = new User("test@gmail.com", "Test123", "tes", "tes", "ROLE_ADMIN");
+        User updatedUser = new User("test@gmail.com", "Test456", "tes", "tes", "ROLE_ADMIN");
+
+        // mock
+        when(users.findById(user.getId())).thenReturn(Optional.of(user));
+
+        // act
+        User newUser = userService.updateUserPassword(user.getId(), updatedUser);
+        
+        // assert
+        assertNull(newUser);
+        verify(users).findById(user.getId());
+        
+    }
+    
+    @Test
+    void updateUsername_Success_ReturnUser() {
+        // arrange
+        User user = new User(1L,"test@gmail.com", "Test1235", "tes", "tes");
+        User updatedUser = new User("test1@gmail.com", "Test1235", "tes", "tes","ROLE_ADMIN");
+
+        // mock
+        when(users.findById(anyLong())).thenReturn(Optional.of(user));
+        when(users.findByUsername(anyString())).thenReturn(Optional.empty());
+        when(users.save(any(User.class))).thenReturn(user);
+
+        // act
+        User newUser = userService.updateUser(user.getId(), updatedUser);
+        
+        // assert
+        assertNotNull(newUser);
+        assertEquals(updatedUser.getUsername(), newUser.getUsername());
+        verify(users).save(user);
+        verify(users).findById(user.getId());
+        verify(users).findByUsername(updatedUser.getUsername());
+    }
+    
+        @Test
+        void updateUsername_UsernameExists_ThrowsError() {
+            // arrange
+            User user = new User(1L,"test@gmail.com", "Test1235", "tes", "tes");
+            User updatedUser = new User("test@gmail.com", "Test1235", "tes", "tes","ROLE_ADMIN");
+            User newUser = null ;
+            // mock
+            when(users.findById(anyLong())).thenReturn(Optional.of(user));
+            when(users.findByUsername(anyString())).thenReturn(Optional.of(user));
+            try{
+
+                // act
+                newUser = userService.updateUser(user.getId(), updatedUser);
+                
+                // assert
+            }catch(UsernameExistsException e ){
+                assertNull(newUser);
+                assertEquals(UsernameExistsException.class, e.getClass());
+                verify(users).findById(user.getId());
+                verify(users).findByUsername(updatedUser.getUsername());
+            }
+        }
+    
+    @Test
+    void updateDetails_Success_ReturnUser() {
+        // arrange
+        User user = new User(1L,"test@gmail.com", "Test1235", "tes", "tes");
+        User updatedUser = new User("dummy@gmail.com", "Test1235", "tes1", "tes1","ROLE_ADMIN");
+
+        // mock
+        when(users.findById(anyLong())).thenReturn(Optional.of(user));
+        when(users.save(any(User.class))).thenReturn(user);
+
+        // act
+        User newUser = userService.updateUser(user.getId(), updatedUser);
+        // assert
+        assertNotNull(newUser);
+        assertEquals(updatedUser.getFirstName(), newUser.getFirstName());
+        assertEquals(updatedUser.getLastName(), newUser.getLastName());
+        verify(users).save(user);
+        verify(users).findById(user.getId());
+        
+    }
+    
+    @Test
+    void updateDetailsOrUsername_InvalidUserId_ThrowUserNotFound() {
+        // arrange
+        User newUser = null ;
+        User user = new User(1L,"test@gmail.com", "Test1235", "tes", "tes");
+        User updatedUser = new User("test@gmail.com", "Test1235", "tes1", "tes1","ROLE_ADMIN");
+        when(users.findById(anyLong())).thenReturn(Optional.empty());
+        try{
+            // mock
+            // act
+            newUser = userService.updateUser(user.getId(), updatedUser);
+        }catch(UserNotFoundException e){
+            // assert
+            assertNull(newUser);
+            assertEquals(UserNotFoundException.class, e.getClass());
+            verify(users).findById(user.getId());
+        }
+            
+    }
+
+
+    
 }

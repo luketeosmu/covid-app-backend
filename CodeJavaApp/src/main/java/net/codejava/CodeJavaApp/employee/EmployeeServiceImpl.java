@@ -64,7 +64,13 @@ public class EmployeeServiceImpl {
 
     }
 
-
+    /**
+     * update employee with name, vaxstatus, and FetDate
+     * @param userId
+     * @param employeeId
+     * @param newEmployee
+     * @return Employee / null 
+     */
     public Employee updateEmployee(Long userId, Long employeeId, Employee newEmployee) {
         return employees.findByIdAndUserId(employeeId, userId).map(employee2 -> {
             setDetails(newEmployee, employee2);
