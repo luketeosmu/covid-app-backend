@@ -253,5 +253,4 @@ public class UserServiceTest {
             verify(users).findById(user.getId());
         }
     }
-
 }

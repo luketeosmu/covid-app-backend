@@ -111,4 +111,57 @@ public class UserIntegrationTest {
         assertEquals(404, result.getStatusCode().value());
     }
 
+//-----------------------------------------------------------------------------------------------------------------------------------------
+    //Additional test cases attempted
+    // @Test
+    // public void getUsers_Success() throws Exception {
+    //     users.save(new User("hihi4@gmail.com", encoder.encode("Tester123"), "john", "luke", "ROLE_ADMIN"));
+    //     URI uri = new URI(baseUrl + port + "/users");
+    //     ResponseEntity<User[]> result = restTemplate.withBasicAuth("email", "password").getForEntity(uri, User[].class);
+    //     User[] users = result.getBody();
+
+    //     assertEquals(1, users.length);
+    //     assertEquals(200, result.getStatusCode().value());
+    // }
+
+    // @Test
+    // public void addUser_Success() throws Exception {
+    //     URI uri = new URI(baseUrl + port + "/users");
+    //     User user = new User("email", encoder.encode("password"), "luke", "handsome","ROLE_ADMIN");
+    //     // User user = users.save(new User("hihi@gmail.com", "Tester123", " firstname",
+    //     // "lastname", "ROLE_ADMIN"));
+    //     ResponseEntity<User> result = restTemplate.postForEntity(uri,user,User.class);
+
+    //     // assertEquals(201, result.getStatusCode());
+    //     assertEquals(user.getUsername(), result.getBody().getUsername());
+    // }
+
+    // @Test
+    // public void updateUser_ValidUserId_Success() throws Exception {
+    // User userToUpdate = new User("user@gmail.com", encoder.encode("password"),"luke", "handsome", "ROLE_USER");
+    // User admin = new User("admin@gmail.com", encoder.encode("password"), "luke","handsome", "ROLE_ADMIN");
+    // User newUser = new User("newuser@gmail.com", encoder.encode("newPassword"),"JOHN", "ugly", "ROLE_USER");
+    // Long userId = users.save(userToUpdate).getId().longValue();
+    // users.save(admin);
+    //
+    // URI uri = new URI(baseUrl + port + "/users/" + userId);
+    // ResponseEntity<User> result = restTemplate.withBasicAuth("admin@gmail.com","password").exchange(uri, HttpMethod.PUT, new HttpEntity<>(newUser), User.class);
+    // assertEquals(200, result.getStatusCode().value());
+    // assertEquals(newUser.getFirstName(), result.getBody().getFirstName());
+    // }
+    //
+    // @Test
+    // public void updateUser_InvalidUserId_Failure() throws Exception {
+    // User admin = new User("admin@gmail.com", encoder.encode("password"), "luke","handsome", "ROLE_ADMIN");
+    // User newUser = new User("user@gmail.com", encoder.encode("password"), "JOHN","handsome", "ROLE_USER");
+    // users.save(admin);
+    //
+    // URI uri = new URI(baseUrl + port + "/users/" + 10L);
+    // HttpHeaders headers = new HttpHeaders();
+    //// headers.setContentType(MediaType.APPLICATION_JSON);
+    // HttpEntity<User> httpEntity = new HttpEntity<User>(newUser);
+    // ResponseEntity<User> result = restTemplate.withBasicAuth("admin@gmail.com","password")
+    // .exchange(uri, HttpMethod.PUT, httpEntity, User.class);
+    // assertEquals(404, result.getStatusCode().value());
+    // }
 }
